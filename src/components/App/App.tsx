@@ -1,18 +1,25 @@
 import React from "react";
 
-import { ThemeProvider } from "styled-components";
+import { Route, Switch } from "react-router-dom";
 
-import { MuiThemeProvider } from "@material-ui/core";
+import { CssBaseline } from "@material-ui/core";
 
-import RequestForm from "../RequestForm";
-import theme from "../../styling/theme";
+import Header from "../Header";
+
+import routes from "../../routes";
 
 const App: React.FC = () => (
-  <MuiThemeProvider theme={theme}>
-    <ThemeProvider theme={theme}>
-      <RequestForm />
-    </ThemeProvider>
-  </MuiThemeProvider>
+  <>
+    <CssBaseline />
+    <Header />
+    <Switch>
+      {Object.values(routes).map(({ component: Component, path }) => (
+        <Route path={path} key={path}>
+          <Component />
+        </Route>
+      ))}
+    </Switch>
+  </>
 );
 
 export default App;
