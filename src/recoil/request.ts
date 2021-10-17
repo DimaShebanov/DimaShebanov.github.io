@@ -65,7 +65,7 @@ export const submitRequest: RecoilCallback<unknown> = (opts) => async () => {
     await firestore.collection(REQUESTS_COLLECTION).doc().set({
       brandName: data.brandName,
       dateCreated: firebase.firestore.Timestamp.now(),
-      items: data.requestItems,
+      requestItems: data.requestItems,
     });
 
     showSnackbar(opts)({

@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Color from "../Color";
 
 import { RequestCardProps } from "./RequestCard.interfaces";
-import { Colors, Comments, RemoveIcon, Root } from "./RequestCard.styled";
+import { Colors, Comments, RemoveIcon, StyledCard } from "./RequestCard.styled";
 
 const RequestCard: React.FC<RequestCardProps> = (props) => {
   const { item, index, onRemove, onEdit } = props;
@@ -23,7 +23,7 @@ const RequestCard: React.FC<RequestCardProps> = (props) => {
   }, [id, onRemove]);
 
   return (
-    <Root elevation={5} onClick={handleEdit}>
+    <StyledCard elevation={5} onClick={handleEdit}>
       <RemoveIcon onClick={removeRequest}>
         <FontAwesomeIcon icon={faTimes} size="xs" />
       </RemoveIcon>
@@ -39,7 +39,7 @@ const RequestCard: React.FC<RequestCardProps> = (props) => {
           <Typography variant="body1">{comments}</Typography>
         </Comments>
       </CardContent>
-    </Root>
+    </StyledCard>
   );
 };
 export default memo(RequestCard);

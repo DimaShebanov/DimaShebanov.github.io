@@ -2,7 +2,7 @@ import React, { memo } from "react";
 
 import { useRecoilCallback, useRecoilValueLoadable } from "recoil";
 
-import { useHistory } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 
 import { Typography } from "@material-ui/core";
 
@@ -12,15 +12,16 @@ import { RECOIL_STATES } from "../../constants";
 import { showSnackbar } from "../../recoil/snacks";
 import { SNACKBAR_TYPES } from "../../recoil/snacks.interfaces";
 
+import Loading from "../../components/Loading";
+
+import OrderDetails from "./components/OrderDetails";
+
 import OrdersList from "./components/OrdersList";
 
 const Orders = () => {
   const { replace } = useHistory();
-  const { contents, state } = useRecoilValueLoadable(ordersState);
+  const { state } = useRecoilValueLoadable(ordersState);
   const openSnack = useRecoilCallback(showSnackbar);
-
-  console.log("state", state);
-  console.log("contents", { ...contents });
 
   if (state === RECOIL_STATES.HAS_ERROR) {
     openSnack({
@@ -33,16 +34,20 @@ const Orders = () => {
   }
 
   if (state === RECOIL_STATES.LOADING) {
-    return <>LOADING</>;
+    return <Loading />;
   }
 
   return (
     <>
-      <ScrollContainer>
-        <Typography variant="h6">Список заказов</Typography>
-
-        <OrdersList />
-      </ScrollContainer>
+      <Switch>
+        <Route path="/orders/:id" component={OrderDetails} />
+        <Route path="/orders">
+          <ScrollContainer>
+            <Typography variant="h6">Список заказов</Typography>
+            <OrdersList />
+          </ScrollContainer>
+        </Route>
+      </Switch>
     </>
   );
 };

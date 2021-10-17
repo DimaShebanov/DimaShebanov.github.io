@@ -12,7 +12,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import { spaceMixin } from "../../../../styling/mixins";
 
-export const Root = styled(Card)`
+export const StyledCard = styled(Card)`
   position: relative;
   cursor: pointer;
 `;

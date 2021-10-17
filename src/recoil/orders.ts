@@ -17,17 +17,15 @@ export const ordersState = selector<OrdersState>({
       await firestore.collection(REQUESTS_COLLECTION).get()
     ).docs.map((snapshot) => {
       const data = snapshot.data() as FirebaseOrder;
+      console.log("data", data);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      console.log("data.toDate()", data.dateCreated.toMillis());
       return {
         ...data,
         id: snapshot.id,
-        dateCreated: data.dateCreated?.seconds,
+        dateCreated: data.dateCreated?.seconds * 1000,
       };
     });
-
-    console.log("orders", orders);
 
     return sortBy(orders, "dateCreated").map((order) => ({
       ...order,
