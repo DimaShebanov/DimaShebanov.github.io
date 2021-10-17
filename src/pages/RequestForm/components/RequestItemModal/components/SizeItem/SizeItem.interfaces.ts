@@ -5,4 +5,5 @@ export interface SizeItemProps {
   // onRemove: (colorIndex: number, index: number) => void;
   onRemove: (index: number) => void;
   getError: (name: string) => string | null;
+  usedSizes: Array<string>;
 }

@@ -30,6 +30,7 @@ const Header: React.FC = () => {
     logout,
     goToOrders,
     onLogoClick,
+    onTitleClick,
   } = useHeader();
 
   return (
@@ -40,7 +41,7 @@ const Header: React.FC = () => {
             <Box display="flex" alignItems="center">
               <Box display="flex" alignItems="center">
                 <Logo src={logoImg} alt="GUS" onClick={onLogoClick} />
-                <Typography variant="h6" color="inherit">
+                <Typography variant="h6" color="inherit" onClick={onTitleClick}>
                   MAMA I GUS
                 </Typography>
               </Box>

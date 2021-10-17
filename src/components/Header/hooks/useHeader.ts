@@ -43,6 +43,10 @@ const useHeader = () => {
     [openAuth]
   );
 
+  const onTitleClick = useCallback(() => {
+    push(routes.home.path);
+  }, [push]);
+
   return {
     authOpen,
     openAuth,
@@ -57,6 +61,7 @@ const useHeader = () => {
     logout,
     goToOrders,
     onLogoClick,
+    onTitleClick,
   };
 };
 

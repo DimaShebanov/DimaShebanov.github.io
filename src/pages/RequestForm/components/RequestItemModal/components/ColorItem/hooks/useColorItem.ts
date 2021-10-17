@@ -1,14 +1,23 @@
-import { useFieldArray } from "react-hook-form";
-import { useCallback, useLayoutEffect } from "react";
+import { useFieldArray, useWatch } from "react-hook-form";
+import { useCallback, useLayoutEffect, useMemo } from "react";
 
 import getSize from "../../../../../utils/getSize";
 import { ColorItemProps } from "../ColorItem.interfaces";
+import { RequestItemColorSize } from "../../../../../../../recoil/interfaces";
 
 const useColorItem = (props: ColorItemProps) => {
   const { index, onColorRemove, item, getError } = props;
   const { fields: sizes, append, remove } = useFieldArray({
     name: `colors[${index}].sizes`,
   });
+
+  const sizeObjects = useWatch<Array<RequestItemColorSize>>({
+    name: `colors[${index}].sizes`,
+  });
+
+  const usedSizes = useMemo(() => sizeObjects?.map(({ size }) => size) || [], [
+    sizeObjects,
+  ]);
 
   const handleAddSize = useCallback(() => {
     append(getSize());
@@ -36,6 +45,7 @@ const useColorItem = (props: ColorItemProps) => {
     ...props,
     getError,
     sizes,
+    usedSizes,
     handleAddSize,
     handleRemoveSize,
     handleRemoveColor,

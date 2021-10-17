@@ -21,6 +21,5 @@ export const DeleteSize = styled(IconButton)`
 `;
 
 export const StyledSelect = styled(Select)`
-  // margin: ${spaceMixin(1)} 0;
   margin: ${spaceMixin(2)} 0 ${spaceMixin(0.5)};
 `;

@@ -26,6 +26,7 @@ const ColorItem: React.FC<ColorItemProps> = (props) => {
     handleRemoveColor,
     handleRemoveSize,
     sizes,
+    usedSizes,
     index,
   } = useColorItem(props);
 
@@ -52,6 +53,7 @@ const ColorItem: React.FC<ColorItemProps> = (props) => {
           {sizes.map(({ id }, sizeIndex) => (
             <SizeItem
               key={id}
+              usedSizes={usedSizes}
               basePath={`colors[${index}].sizes[${sizeIndex}]`}
               index={sizeIndex}
               getError={getError}
