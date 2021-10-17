@@ -1,6 +1,6 @@
 import { selector } from "recoil";
 
-import { sortBy } from "lodash";
+import { orderBy } from "lodash";
 
 import dateformat from "dateformat";
 
@@ -17,7 +17,6 @@ export const ordersState = selector<OrdersState>({
       await firestore.collection(REQUESTS_COLLECTION).get()
     ).docs.map((snapshot) => {
       const data = snapshot.data() as FirebaseOrder;
-      console.log("data", data);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       return {
@@ -27,7 +26,7 @@ export const ordersState = selector<OrdersState>({
       };
     });
 
-    return sortBy(orders, "dateCreated").map((order) => ({
+    return orderBy(orders, "dateCreated", "desc").map((order) => ({
       ...order,
       dateCreated: dateformat(order.dateCreated, "dd.mm.yyyy HH:MM"),
     }));
