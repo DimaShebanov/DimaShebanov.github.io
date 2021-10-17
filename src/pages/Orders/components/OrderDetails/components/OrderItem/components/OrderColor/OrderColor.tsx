@@ -1,23 +1,20 @@
-import React, { useMemo } from "react";
+import React from "react";
 
 import { TableCell, TableRow } from "@material-ui/core";
 
-import { groupBy } from "lodash";
+import { getCountKey } from "../../../../../../utils/getCountKey";
 
 import { OrderColorProps } from "./OrderColor.interfaces";
 
 const OrderColor: React.FC<OrderColorProps> = (props) => {
-  const { item, sizes } = props;
+  const { item, sizes, countsMap } = props;
   const { color } = item;
-
-  // TODO try to make it simpler
-  const groupedSizes = useMemo(() => groupBy(item.sizes, "size"), [item.sizes]);
 
   return (
     <TableRow>
       <TableCell>{color}</TableCell>
       {sizes.map((size) => (
-        <TableCell key={size}>{groupedSizes[size]?.[0]?.count}</TableCell>
+        <TableCell key={size}>{countsMap[getCountKey(color, size)]}</TableCell>
       ))}
     </TableRow>
   );

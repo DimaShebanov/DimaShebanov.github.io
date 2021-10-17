@@ -9,7 +9,9 @@ import {
   TableRow,
 } from "@material-ui/core";
 
-import { uniq } from "lodash";
+import { getTableData } from "../../../../utils/getTableData";
+
+import { renderTable } from "../../../../utils/renderTable";
 
 import { OrderItemProps } from "./OrderItem.interfaces";
 import OrderColor from "./components/OrderColor";
@@ -19,32 +21,18 @@ const OrderItem: React.FC<OrderItemProps> = (props) => {
   const { item } = props;
   const { name, comments, colors } = item;
 
+  // TODO try to make it simpler
+  const { sizes, countsMap } = useMemo(() => getTableData(colors), [colors]);
+
   const handleCardClick = useCallback(() => {
-    const winPrint = window.open(
-      "",
-      "",
-      "left=0,top=0,width=800,height=600,toolbar=0,scrollbars=0,status=0"
-    );
-    winPrint?.document.write(
-      "<title>Print  Report</title><br /><br /> Hello World"
-    );
+    const winPrint = window.open();
+
+    winPrint?.document.write(renderTable(item, sizes, countsMap));
     // winPrint?.document.close();
     winPrint?.focus();
-    winPrint?.print();
-    winPrint?.close();
-  }, []);
-
-  // TODO try to make it simpler
-  const presentSizes = useMemo(
-    () =>
-      uniq(
-        colors.reduce(
-          (acc, { sizes }) => [...acc, ...sizes.map(({ size }) => size)],
-          [] as string[]
-        )
-      ),
-    [colors]
-  );
+    // winPrint?.print();
+    // winPrint?.close();
+  }, [countsMap, item, sizes]);
 
   return (
     <StyledCard onClick={handleCardClick}>
@@ -57,14 +45,19 @@ const OrderItem: React.FC<OrderItemProps> = (props) => {
           <TableHead>
             <TableRow>
               <TableCell>Цвет</TableCell>
-              {presentSizes.map((size) => (
+              {sizes.map((size) => (
                 <TableCell key={size}>{size}</TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {colors.map((color) => (
-              <OrderColor key={color.id} item={color} sizes={presentSizes} />
+              <OrderColor
+                key={color.id}
+                item={color}
+                sizes={sizes}
+                countsMap={countsMap}
+              />
             ))}
           </TableBody>
         </Table>
