@@ -1,8 +1,8 @@
 import { atom } from "recoil";
 
-import { auth } from "../firebase/localFirebase";
+import { auth } from "../../firebase/localFirebase";
 
-import { AuthUser } from "./user.interfaces";
+import { AuthUser } from "./interfaces";
 
 export const userAtom = atom<AuthUser>({
   key: "auth",

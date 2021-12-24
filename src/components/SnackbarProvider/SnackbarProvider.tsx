@@ -4,7 +4,8 @@ import { useRecoilCallback, useRecoilValue } from "recoil";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
-import { hideSnackbar, snackbarAtom } from "../../recoil/snacks";
+import { snackbarAtom } from "../../recoil/snacks/atoms";
+import { hideSnackbar } from "../../recoil/snacks/actions";
 
 import { SNACKBAR_POSITION } from "./constants";
 

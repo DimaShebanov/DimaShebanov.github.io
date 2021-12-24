@@ -12,10 +12,21 @@ import { spaceMixin } from "../../../../styling/mixins";
 export const Root = styled(Dialog)`
   .MuiPaper-root {
     max-width: 100vw;
-    max-height: 100vh;
+    max-height: 80vh;
     width: 700px;
     margin: 0;
   }
+`;
+
+export const TitleWrap = styled.div`
+  display: flex;
+  align-items: flex-end;
+  margin: ${spaceMixin(2)} 0;
+`;
+
+export const TitleInputs = styled.div`
+  margin-left: ${spaceMixin(3)};
+  flex-grow: 1;
 `;
 
 export const ColorsWrap = styled.div`

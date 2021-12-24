@@ -1,20 +1,20 @@
 import { ChangeEvent, useCallback, useState } from "react";
 import { useRecoilCallback, useRecoilState, useRecoilValue } from "recoil";
 
-import {
-  requestBrandName,
-  requestItemsSelector,
-  requestLoading,
-  submitRequest,
-} from "../../../recoil/request";
 import { RequestItemDrawerState } from "../RequestForm.interfaces";
 import { INITIAL_DRAWER_STATE } from "../contants";
 import { RequestItem } from "../../../recoil/interfaces";
+import { requestLoadingAtom } from "../../../recoil/request/atoms";
+import {
+  requestBrandNameSelector,
+  requestItemsSelector,
+} from "../../../recoil/request/selectors";
+import { actions } from "../../../recoil/request/actions";
 
 const useRequestForm = () => {
   const [requestItems, setRequestItems] = useRecoilState(requestItemsSelector);
-  const [brandName, setBrandName] = useRecoilState(requestBrandName);
-  const loading = useRecoilValue(requestLoading);
+  const [brandName, setBrandName] = useRecoilState(requestBrandNameSelector);
+  const loading = useRecoilValue(requestLoadingAtom);
   const [drawerState, setDrawerState] = useState<RequestItemDrawerState>(
     INITIAL_DRAWER_STATE
   );
@@ -64,7 +64,7 @@ const useRequestForm = () => {
     [setRequestItems]
   );
 
-  const onSubmit = useRecoilCallback(submitRequest);
+  const onSubmit = useRecoilCallback(actions);
 
   return {
     requestItems,

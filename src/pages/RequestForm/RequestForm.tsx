@@ -69,7 +69,7 @@ const RequestForm = () => {
           onClose={closeRequestModal}
         />
       </StyledScrollContainer>
-      <AppBar elevation={2} position="static" component="footer">
+      <AppBar elevation={2} position="sticky" component="footer">
         <Toolbar variant="dense">
           <SubmitButton
             disabled={loading || !requestItems.length}

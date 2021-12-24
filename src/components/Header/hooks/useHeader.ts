@@ -4,10 +4,10 @@ import { useHistory } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
 import useToggleState from "../../../shared/hooks";
-import { userAtom } from "../../../recoil/user";
 import { auth } from "../../../firebase/localFirebase";
 import routes from "../../../routes";
 import { DOUBLE_TAP_THRESHOLD } from "../../../constants";
+import { userAtom } from "../../../recoil/user/atoms";
 
 const useHeader = () => {
   const { push } = useHistory();

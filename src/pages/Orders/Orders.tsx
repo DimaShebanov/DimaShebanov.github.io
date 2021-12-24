@@ -7,20 +7,21 @@ import { Route, Switch, useHistory } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 
 import { NervousGoose, ScrollContainer } from "../../shared/styled";
-import { ordersState } from "../../recoil/orders";
 import { RECOIL_STATES } from "../../constants";
-import { showSnackbar } from "../../recoil/snacks";
-import { SNACKBAR_TYPES } from "../../recoil/snacks.interfaces";
 
 import Loading from "../../components/Loading";
 
-import OrderDetails from "./components/OrderDetails";
+import { ordersSelector } from "../../recoil/orders/selectors";
+import { showSnackbar } from "../../recoil/snacks/actions";
+import { SNACKBAR_TYPES } from "../../recoil/snacks/interfaces";
 
 import OrdersList from "./components/OrdersList";
 
+import OrderDetails from "./components/OrderDetails";
+
 const Orders = () => {
   const { replace } = useHistory();
-  const { state } = useRecoilValueLoadable(ordersState);
+  const { state } = useRecoilValueLoadable(ordersSelector);
   const openSnack = useRecoilCallback(showSnackbar);
 
   if (state === RECOIL_STATES.HAS_ERROR) {

@@ -5,8 +5,9 @@ import { find } from "lodash";
 
 import { Typography } from "@material-ui/core";
 
-import { ordersState } from "../../../../recoil/orders";
 import { ScrollContainer } from "../../../../shared/styled";
+
+import { ordersSelector } from "../../../../recoil/orders/selectors";
 
 import { ItemsGrid } from "./OrdersDetails.styled";
 
@@ -14,7 +15,7 @@ import OrderItem from "./components/OrderItem";
 
 const OrderDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const orders = useRecoilValue(ordersState);
+  const orders = useRecoilValue(ordersSelector);
 
   const order = useMemo(() => find(orders, ["id", id]), [id, orders]);
 

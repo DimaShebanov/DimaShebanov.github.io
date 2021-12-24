@@ -9,7 +9,7 @@ const theme = createTheme({
     primary: yellow,
     secondary: orange,
     background: {
-      default: common.black,
+      default: "#202020",
     },
   },
   overrides: {
@@ -25,7 +25,5 @@ declare module "styled-components" {
     [key in keyof typeof theme]: typeof theme[key];
   };
 }
-
-console.log("theme", theme);
 
 export default theme;

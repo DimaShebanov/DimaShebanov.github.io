@@ -5,10 +5,10 @@ import { List, ListItem, ListItemText, Paper } from "@material-ui/core";
 
 import { Link } from "react-router-dom";
 
-import { ordersState } from "../../../../recoil/orders";
+import { ordersSelector } from "../../../../recoil/orders/selectors";
 
 const OrdersList = () => {
-  const orders = useRecoilValue(ordersState);
+  const orders = useRecoilValue(ordersSelector);
 
   return (
     <>

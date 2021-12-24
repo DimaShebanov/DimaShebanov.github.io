@@ -20,10 +20,13 @@ import {
   Header,
   Root,
   SubmitButton,
+  TitleInputs,
+  TitleWrap,
 } from "./RequestItemModalContent.styled";
 
 import ColorItem from "./components/ColorItem";
 import useRequestItemModalContent from "./hooks";
+import ImageInput from "./components/ImageInput/ImageInput";
 
 const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
   const {
@@ -46,22 +49,48 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
       <Header>Добавить новое изделие</Header>
       <DialogContent>
         <FormProvider {...formContext}>
-          <Controller
-            name="name"
-            render={(field, { invalid }) => (
-              <FormControl fullWidth>
-                <TextField
-                  {...field}
-                  label="Что шьем?"
-                  fullWidth
-                  margin="dense"
+          <TitleWrap>
+            <Controller
+              name="image"
+              render={(field) => (
+                <ImageInput
+                  value={field.value}
+                  onChange={(file) => field.onChange(file)}
                 />
-                <FormHelperText error={invalid}>
-                  {getError(field.name)}
-                </FormHelperText>
-              </FormControl>
-            )}
-          />
+              )}
+            />
+            <TitleInputs>
+              <Controller
+                name="name"
+                render={(field, { invalid }) => (
+                  <FormControl fullWidth>
+                    <TextField
+                      {...field}
+                      label="Что шьем?"
+                      fullWidth
+                      margin="none"
+                    />
+                    <FormHelperText error={invalid}>
+                      {getError(field.name)}
+                    </FormHelperText>
+                  </FormControl>
+                )}
+              />
+              <Controller
+                name="comments"
+                render={(field) => (
+                  <TextField
+                    {...field}
+                    margin="none"
+                    fullWidth
+                    label="Комментарии?"
+                    multiline
+                  />
+                )}
+              />
+            </TitleInputs>
+          </TitleWrap>
+
           <Typography variant="h6">Цвета</Typography>
           <ColorsWrap>
             {colors.map((color, colorIndex) => (
@@ -82,18 +111,6 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
           >
             + Добавить цвет
           </Button>
-          <Controller
-            name="comments"
-            render={(field) => (
-              <TextField
-                {...field}
-                margin="normal"
-                fullWidth
-                label="Комментарии?"
-                multiline
-              />
-            )}
-          />
         </FormProvider>
       </DialogContent>
       <Footer>

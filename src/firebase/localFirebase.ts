@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
+import "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyByZ0cDD3QUdYSEKfBsZAAyHI8U6yduVe4",
@@ -16,6 +17,7 @@ firebase.initializeApp(firebaseConfig);
 
 export const firestore = firebase.firestore();
 export const auth = firebase.auth();
+export const storageRef = firebase.storage().ref();
 
 // TODO this is the way to logout and check if user logged in
 // auth.signOut();

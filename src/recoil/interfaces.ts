@@ -14,7 +14,11 @@ export interface RequestItemColor {
   id: string;
   sizes: Array<RequestItemColorSize>;
   color: string;
-  // count: string;
+}
+
+export interface RequestItemImage {
+  file: File;
+  url: string;
 }
 
 export interface RequestItem {
@@ -22,6 +26,8 @@ export interface RequestItem {
   colors: Array<RequestItemColor>;
   name: string;
   comments?: string;
+  image?: RequestItemImage;
+  imageUrl?: string;
 }
 
 export interface RequestObject {

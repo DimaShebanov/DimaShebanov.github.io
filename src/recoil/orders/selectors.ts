@@ -4,12 +4,12 @@ import { orderBy } from "lodash";
 
 import dateformat from "dateformat";
 
-import { firestore } from "../firebase/localFirebase";
-import { REQUESTS_COLLECTION } from "../firebase/constants";
+import { firestore } from "../../firebase/localFirebase";
+import { REQUESTS_COLLECTION } from "../../firebase/constants";
 
-import { FirebaseOrder, OrdersState } from "./orders.interfaces";
+import { FirebaseOrder, OrdersState } from "./interfaces";
 
-export const ordersState = selector<OrdersState>({
+export const ordersSelector = selector<OrdersState>({
   key: "orderState",
   // eslint-disable-next-line consistent-return
   get: async () => {

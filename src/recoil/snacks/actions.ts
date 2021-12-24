@@ -1,16 +1,9 @@
 import { ReactNode } from "react";
 
-import { atom } from "recoil";
+import { RecoilCallback } from "../interfaces";
 
-import { RecoilCallback } from "./interfaces";
-import { SNACKBAR_TYPES, SnacksAtom } from "./snacks.interfaces";
-
-export const snackbarAtom = atom<SnacksAtom>({
-  key: "snackbarAtom",
-  default: {
-    isOpen: false,
-  },
-});
+import { snackbarAtom } from "./atoms";
+import { SNACKBAR_TYPES } from "./interfaces";
 
 export const showSnackbar: RecoilCallback<{
   type: SNACKBAR_TYPES;

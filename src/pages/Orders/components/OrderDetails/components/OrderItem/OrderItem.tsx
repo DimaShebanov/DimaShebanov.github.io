@@ -21,7 +21,6 @@ const OrderItem: React.FC<OrderItemProps> = (props) => {
   const { item } = props;
   const { name, comments, colors } = item;
 
-  // TODO try to make it simpler
   const { sizes, countsMap } = useMemo(() => getTableData(colors), [colors]);
 
   const handleCardClick = useCallback(() => {
@@ -30,8 +29,8 @@ const OrderItem: React.FC<OrderItemProps> = (props) => {
     winPrint?.document.write(renderTable(item, sizes, countsMap));
     // winPrint?.document.close();
     winPrint?.focus();
-    // winPrint?.print();
-    // winPrint?.close();
+    winPrint?.print();
+    winPrint?.close();
   }, [countsMap, item, sizes]);
 
   return (
