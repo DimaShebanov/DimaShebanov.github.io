@@ -1,8 +1,9 @@
 import { uniq } from "lodash";
 
-import { RequestItemColor } from "../../../recoil/interfaces";
+import { RequestItemColor, Size } from "../../../recoil/interfaces";
 
 import { getCountKey } from "./getCountKey";
+import { sortSizes } from "./sortSizes";
 
 export const getTableData = (colors: Array<RequestItemColor>) => {
   const allSizes: Array<string> = [];
@@ -20,7 +21,7 @@ export const getTableData = (colors: Array<RequestItemColor>) => {
   );
 
   return {
-    sizes: uniq(allSizes),
+    sizes: sortSizes(uniq(allSizes) as Size[]),
     countsMap,
   };
 };

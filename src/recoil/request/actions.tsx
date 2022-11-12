@@ -22,7 +22,7 @@ export const actions: RecoilCallback<unknown> = (opts) => async () => {
     set(requestLoadingAtom, true);
     const preparedItems = [] as Array<RequestItem>;
 
-    await Promise.any(
+    await Promise.all(
       data.requestItems.map(async (item) => {
         const { image, ...restItem } = item;
         const { file, url } = image || {};
@@ -39,9 +39,13 @@ export const actions: RecoilCallback<unknown> = (opts) => async () => {
             ...restItem,
             imageUrl: firebaseUrl,
           });
+        } else {
+          preparedItems.push(restItem);
         }
       })
     );
+
+    console.log("resolve", preparedItems);
 
     await firestore.collection(REQUESTS_COLLECTION).doc().set({
       brandName: data.brandName,
@@ -55,6 +59,10 @@ export const actions: RecoilCallback<unknown> = (opts) => async () => {
     });
     set(requestItemsSelector, []);
   } catch (e) {
+    showSnackbar(opts)({
+      content: "Ой, что-то не получилось. Попробуйте еще раз",
+      type: SNACKBAR_TYPES.error,
+    });
     console.log("ERROR", e.message);
     firestore.collection(ERRORS_COLLECTION).doc().set({
       message: e.message,

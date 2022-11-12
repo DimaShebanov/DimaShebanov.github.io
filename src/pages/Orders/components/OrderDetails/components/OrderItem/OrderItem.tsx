@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 
 import {
+  Avatar,
   CardHeader,
   Table,
   TableBody,
@@ -13,9 +14,15 @@ import { getTableData } from "../../../../utils/getTableData";
 
 import { renderTable } from "../../../../utils/renderTable";
 
+import { printHTMLString } from "../../../../utils/printHTMLString";
+
 import { OrderItemProps } from "./OrderItem.interfaces";
 import OrderColor from "./components/OrderColor";
-import { StyledCard, StyledCardContent } from "./OrderItem.styled";
+import {
+  StyledAvatar,
+  StyledCard,
+  StyledCardContent,
+} from "./OrderItem.styled";
 
 const OrderItem: React.FC<OrderItemProps> = (props) => {
   const { item } = props;
@@ -24,18 +31,15 @@ const OrderItem: React.FC<OrderItemProps> = (props) => {
   const { sizes, countsMap } = useMemo(() => getTableData(colors), [colors]);
 
   const handleCardClick = useCallback(() => {
-    const winPrint = window.open();
-
-    winPrint?.document.write(renderTable(item, sizes, countsMap));
-    // winPrint?.document.close();
-    winPrint?.focus();
-    winPrint?.print();
-    winPrint?.close();
+    printHTMLString(renderTable(item, sizes, countsMap));
   }, [countsMap, item, sizes]);
 
   return (
     <StyledCard onClick={handleCardClick}>
       <CardHeader
+        avatar={
+          <StyledAvatar variant="square" src={item.imageUrl} alt={item.name} />
+        }
         title={`Название изделия: ${name}`}
         subheader={`Комментарии к изделию: ${comments}`}
       />

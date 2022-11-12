@@ -26,6 +26,8 @@ export const ordersSelector = selector<OrdersState>({
       };
     });
 
+    console.log("orders", orders);
+
     return orderBy(orders, "dateCreated", "desc").map((order) => ({
       ...order,
       dateCreated: dateformat(order.dateCreated, "dd.mm.yyyy HH:MM"),

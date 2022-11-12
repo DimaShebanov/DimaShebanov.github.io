@@ -14,9 +14,12 @@ const OrdersList = () => {
     <>
       <Paper>
         <List>
-          {orders.map(({ brandName, id, dateCreated }) => (
+          {orders.map(({ brandName, id, dateCreated, requestItems }) => (
             <ListItem component={Link} to={`/orders/${id}`} button key={id}>
-              <ListItemText primary={brandName} secondary={dateCreated} />
+              <ListItemText
+                primary={`${brandName} (${requestItems?.length})`}
+                secondary={dateCreated}
+              />
             </ListItem>
           ))}
         </List>

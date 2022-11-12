@@ -2,12 +2,19 @@ import { RequestItem } from "../../../recoil/interfaces";
 
 import { getCountKey } from "./getCountKey";
 
-export const renderTable = (
-  item: RequestItem,
-  presentSizes: Array<string>,
-  countMap: Record<string, string>
-) => `
-  <style>
+export const renderTableStyle = () => `
+ <style>
+    .item {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+    }
+    
+    .image {
+        max-width: 300px;
+        max-height: 300px;
+    }
+    
     table {
         border-collapse: collapse;
     }
@@ -22,31 +29,46 @@ export const renderTable = (
     .count {
         text-align: center;
     }
-  </style>       
-  <h3>${item.name}</h3>
-  <table>
-      <thead>
-          <td>Цвет</td>
-          ${presentSizes
-            .map((size) => `<td class="count">${size}</td>`)
-            .join("")}
-      </thead>
-      <tbody>
-          ${item.colors
-            .map(
-              ({ color }) =>
-                `<tr>
-                  <td>${color}</td>
-                  ${presentSizes
-                    .map(
-                      (size) =>
-                        `<td class="count">${
-                          countMap[getCountKey(color, size)] || ""
-                        }</td>`
-                    )
-                    .join("")}</tr>`
-            )
-            .join("")}
-      </tbody>
-  </table>
-        `;
+  </style>
+`;
+
+export const renderTable = (
+  item: RequestItem,
+  presentSizes: Array<string>,
+  countMap: Record<string, string>,
+  omitStyle?: boolean
+) => `
+  ${omitStyle ? "" : renderTableStyle()}   
+  <h3>Название модели: ${item.name}</h3>
+  <h5>Комментарии: ${item.comments}</h5>
+  <div class="item">
+      <table>
+          <thead>
+              <td>Цвет</td>
+              ${presentSizes
+                .map((size) => `<td class="count">${size}</td>`)
+                .join("")}
+          </thead>
+          <tbody>
+              ${item.colors
+                .map(
+                  ({ color }) =>
+                    `<tr>
+                      <td>${color}</td>
+                      ${presentSizes
+                        .map(
+                          (size) =>
+                            `<td class="count">${
+                              countMap[getCountKey(color, size)] || ""
+                            }</td>`
+                        )
+                        .join("")}</tr>`
+                )
+                .join("")}
+          </tbody>
+      </table>
+      <img src="${item.imageUrl}" alt="Без картинки" class="image">
+  </div>
+  <br/>
+  <br/>
+`;

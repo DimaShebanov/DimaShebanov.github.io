@@ -1,4 +1,6 @@
-export const SIZES = ["XS", "S", "M", "L", "XL", "XXL"];
+import { Size } from "../../recoil/interfaces";
+
+export const SIZES = Object.values(Size);
 
 export const INITIAL_DRAWER_STATE = {
   isOpen: false,
