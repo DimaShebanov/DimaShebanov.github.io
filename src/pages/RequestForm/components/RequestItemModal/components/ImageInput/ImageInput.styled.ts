@@ -14,8 +14,9 @@ const imageSizes = css`
   margin: 0 auto;
 `;
 
-export const AddImage = styled(Button)`
+export const AddImageButton = styled(Button)<{ error: boolean }>`
   ${imageSizes};
+  ${({ error }) => error && "border-color: #f44336"}
 `;
 
 export const Preview = styled.img`

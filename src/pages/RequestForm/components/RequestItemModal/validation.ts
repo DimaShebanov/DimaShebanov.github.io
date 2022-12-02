@@ -1,28 +1,27 @@
-import { array, mixed, number, object, string } from "yup";
+import { array, number, object, string } from "yup";
 
-import { SIZES } from "../../contants";
-
-const REQUIRED_MESSAGE = "Это поле обязательно для заполнения";
+const REQUIRED_MESSAGE = "Це поле обов'язкове";
 
 const STRING_RULE = string()
   .trim()
   .required(REQUIRED_MESSAGE)
-  .min(3, "Введите минимум три символа");
+  .min(3, "Впишіть мінімум три символи");
 
 const requestItemSchema = object().shape({
   name: STRING_RULE,
+  image: object().required("Обов'язково додайте фото"),
   colors: array().of(
     object().shape({
       color: STRING_RULE,
       sizes: array().of(
         object().shape({
-          size: mixed()
+          size: string()
             .required(REQUIRED_MESSAGE)
-            .oneOf(SIZES, "Выберите размер"),
+            .min(1, "Оберіть або впишіть розмір"),
           count: number()
-            .typeError("Количество должно быть цифрой")
+            .typeError("Кількість має бути цифрою")
             .required(REQUIRED_MESSAGE)
-            .min(1, "Количество не может быть меньше одного"),
+            .min(1, "Кількість не може бути меньше одиниці"),
         })
       ),
     })

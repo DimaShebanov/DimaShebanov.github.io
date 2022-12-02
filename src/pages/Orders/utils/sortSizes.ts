@@ -3,15 +3,15 @@ import { orderBy } from "lodash";
 import { Size } from "../../../recoil/interfaces";
 
 const WeightBySize = {
-  [Size.XS]: 0,
-  [Size.S]: 1,
-  [Size.M]: 2,
-  [Size.L]: 3,
-  [Size.XL]: 4,
-  [Size.XXL]: 5,
-  [Size.XXXL]: 6,
-  [Size.XXXXL]: 7,
+  [Size.XXS]: 0,
+  [Size.XS]: 1,
+  [Size.S]: 2,
+  [Size.M]: 3,
+  [Size.L]: 4,
+  [Size.XL]: 5,
+  [Size.XXL]: 6,
+  custom: 7,
 };
 
 export const sortSizes = (sizes: Size[]) =>
-  orderBy(sizes, (size) => WeightBySize[size]);
+  orderBy(sizes, (size) => WeightBySize[size] ?? WeightBySize.custom);

@@ -6,3 +6,5 @@ export enum RECOIL_STATES {
   LOADING = "loading",
   HAS_ERROR = "hasError",
 }
+
+export const CUSTOM_SIZE = "Свій розмір";

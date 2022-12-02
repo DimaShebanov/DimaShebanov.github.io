@@ -56,6 +56,7 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
                 <ImageInput
                   value={field.value}
                   onChange={(file) => field.onChange(file)}
+                  error={getError(field.name)}
                 />
               )}
             />

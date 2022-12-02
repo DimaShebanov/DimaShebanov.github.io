@@ -5,14 +5,13 @@ export type RecoilCallback<T = undefined> = (
 ) => (args: T) => void | Promise<void>;
 
 export enum Size {
+  XXS = "XXS",
   XS = "XS",
   S = "S",
   M = "M",
   L = "L",
   XL = "XL",
   XXL = "XXL",
-  XXXL = "XXXL",
-  XXXXL = "XXXXL",
 }
 
 export interface RequestItemColorSize {

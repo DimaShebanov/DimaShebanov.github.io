@@ -1,7 +1,9 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   FormControl,
   FormHelperText,
+  IconButton,
+  InputAdornment,
   InputLabel,
   // MenuItem,
   TextField,
@@ -9,15 +11,26 @@ import {
 import { Controller, useWatch } from "react-hook-form";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCross, faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import { SIZES } from "../../../../contants";
 
-import { DeleteSize, Root, StyledSelect } from "./SizeItem.styled";
+import { CUSTOM_SIZE } from "../../../../../../constants";
+
+import { Size } from "../../../../../../recoil/interfaces";
+
+import {
+  DeleteSize,
+  Root,
+  SizeFormControl,
+  SizeWrap,
+  StyledSelect,
+} from "./SizeItem.styled";
 import { SizeItemProps } from "./SizeItem.interfaces";
 
 const SizeItem: React.FC<SizeItemProps> = (props) => {
   const { index, basePath, onRemove, getError, usedSizes } = props;
+  const [showCustomSize, setShowCustomSize] = useState(false);
   const sizeValue = useWatch<string>({ name: `${basePath}.size` });
 
   const options = useMemo(
@@ -25,9 +38,13 @@ const SizeItem: React.FC<SizeItemProps> = (props) => {
       SIZES.filter(
         (sizeOption) =>
           sizeOption === sizeValue || !usedSizes.includes(sizeOption || "")
-      ),
+      ).concat(CUSTOM_SIZE as Size),
     [sizeValue, usedSizes]
   );
+
+  const handleBackToSelectClick = useCallback(() => {
+    setShowCustomSize(false);
+  }, []);
 
   const handleDelete = useCallback(() => {
     onRemove(index);
@@ -35,40 +52,79 @@ const SizeItem: React.FC<SizeItemProps> = (props) => {
 
   return (
     <Root>
-      <FormControl>
-        <InputLabel>Размер</InputLabel>
+      {showCustomSize ? (
         <Controller
           name={`${basePath}.size`}
           render={(field, { invalid }) => (
-            <>
-              <StyledSelect
+            <FormControl>
+              <TextField
                 {...field}
-                native
-                inputProps={field.value ? { shrink: true } : {}}
-              >
-                <option aria-label="None" value="" />
-                {options.map((size) => (
-                  <option
-                    key={size}
-                    value={size}
-                    selected={size === field.value}
-                  >
-                    {size}
-                  </option>
-                ))}
-              </StyledSelect>
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <FontAwesomeIcon
+                        cursor="pointer"
+                        onClick={handleBackToSelectClick}
+                        icon={faTimes}
+                        size="xs"
+                      />
+                    </InputAdornment>
+                  ),
+                }}
+                label={`Напишіть ${CUSTOM_SIZE.toLowerCase()}`}
+              />
               <FormHelperText error={invalid}>
                 {getError(field.name)}
               </FormHelperText>
-            </>
+            </FormControl>
           )}
         />
-      </FormControl>
+      ) : (
+        <SizeFormControl>
+          <InputLabel>Размер</InputLabel>
+          <Controller
+            name={`${basePath}.size`}
+            render={(field, { invalid }) => (
+              <>
+                <StyledSelect
+                  {...field}
+                  onChange={(e) => {
+                    const { value } = e.target;
+                    if (value === CUSTOM_SIZE) {
+                      setShowCustomSize(true);
+                    } else {
+                      field.onChange(e);
+                    }
+                  }}
+                  native
+                  inputProps={field.value ? { shrink: true } : {}}
+                >
+                  <option aria-label="None" value="" />
+                  {options.map((size) => (
+                    <option
+                      key={size}
+                      value={size}
+                      selected={size === field.value}
+                    >
+                      {size}
+                    </option>
+                  ))}
+                </StyledSelect>
+                {!showCustomSize && (
+                  <FormHelperText error={invalid}>
+                    {getError(field.name)}
+                  </FormHelperText>
+                )}
+              </>
+            )}
+          />
+        </SizeFormControl>
+      )}
       <Controller
         name={`${basePath}.count`}
         render={(field, { invalid }) => (
           <FormControl>
-            <TextField {...field} label="Количество" type="number" />
+            <TextField {...field} label="Кількість" type="number" />
             <FormHelperText error={invalid}>
               {getError(field.name)}
             </FormHelperText>

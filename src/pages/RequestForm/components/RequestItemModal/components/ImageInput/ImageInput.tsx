@@ -5,10 +5,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 
 import { ImageInputProps } from "./ImageInput.interfaces";
-import { AddImage, HiddenInput, InputRoot, Preview } from "./ImageInput.styled";
+import {
+  AddImageButton,
+  HiddenInput,
+  InputRoot,
+  Preview,
+} from "./ImageInput.styled";
 
 const ImageInput: React.FC<ImageInputProps> = (props) => {
-  const { value, onChange } = props;
+  const { value, onChange, error } = props;
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = useCallback(
@@ -33,9 +38,14 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
       {value ? (
         <Preview src={value?.url} alt="" onClick={handleOpen} />
       ) : (
-        <AddImage onClick={handleOpen} variant="outlined" color="primary">
+        <AddImageButton
+          error={!!error}
+          onClick={handleOpen}
+          variant="outlined"
+          color="primary"
+        >
           <FontAwesomeIcon icon={faPlus} size="2x" />
-        </AddImage>
+        </AddImageButton>
       )}
     </InputRoot>
   );

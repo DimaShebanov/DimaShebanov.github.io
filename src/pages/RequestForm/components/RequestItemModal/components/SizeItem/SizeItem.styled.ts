@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { IconButton, Select } from "@material-ui/core";
+import { FormControl, IconButton, Select } from "@material-ui/core";
 
 import { spaceMixin } from "../../../../../../styling/mixins";
 
@@ -22,4 +22,13 @@ export const DeleteSize = styled(IconButton)`
 
 export const StyledSelect = styled(Select)`
   margin: ${spaceMixin(2)} 0 ${spaceMixin(0.5)};
+`;
+
+export const SizeWrap = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+export const SizeFormControl = styled(FormControl)`
+  flex: 1 0 30%;
 `;
