@@ -15,7 +15,7 @@ import {
 import { requestAtom, requestLoadingAtom } from "./atoms";
 import { requestItemsSelector } from "./selectors";
 
-export const actions: RecoilCallback<unknown> = (opts) => async () => {
+export const sendRequest: RecoilCallback<unknown> = (opts) => async () => {
   const { set, snapshot } = opts;
   try {
     const data = await snapshot.getPromise(requestAtom);
@@ -44,8 +44,6 @@ export const actions: RecoilCallback<unknown> = (opts) => async () => {
         }
       })
     );
-
-    console.log("resolve", preparedItems);
 
     await firestore.collection(REQUESTS_COLLECTION).doc().set({
       brandName: data.brandName,

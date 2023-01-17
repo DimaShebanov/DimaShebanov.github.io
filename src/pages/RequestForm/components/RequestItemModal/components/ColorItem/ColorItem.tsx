@@ -41,7 +41,7 @@ const ColorItem: React.FC<ColorItemProps> = (props) => {
             name={`colors[${index}].color`}
             render={(field, { invalid }) => (
               <FormControl>
-                <TextField {...field} label="Цвет" />
+                <TextField {...field} label="Колір" />
                 <FormHelperText error={invalid}>
                   {getError(field.name)}
                 </FormHelperText>
@@ -61,7 +61,7 @@ const ColorItem: React.FC<ColorItemProps> = (props) => {
             />
           ))}
           <Button onClick={handleAddSize} variant="outlined">
-            Добавить размер
+            Додати розмір
           </Button>
         </SizesWrap>
       </Column>

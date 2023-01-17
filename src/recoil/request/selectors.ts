@@ -13,6 +13,7 @@ export const requestItemsSelector = selector<Array<RequestItem>>({
       requestItems: newValue,
     } as RequestObject),
 });
+
 export const requestBrandNameSelector = selector<string>({
   key: "requestBrandName",
   get: ({ get }) => get(requestAtom).brandName,

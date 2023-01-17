@@ -38,7 +38,7 @@ const RequestForm = () => {
     <>
       <StyledScrollContainer>
         <TextField
-          label="Название бренда"
+          label="Назва бренду"
           value={brandName}
           margin="normal"
           onChange={onBrandNameChange}
@@ -77,7 +77,7 @@ const RequestForm = () => {
             color="secondary"
             onClick={onSubmit}
           >
-            {loading ? <StyledProgress size={24} /> : "Отправить"}
+            {loading ? <StyledProgress size={24} /> : "Відправити"}
           </SubmitButton>
         </Toolbar>
       </AppBar>

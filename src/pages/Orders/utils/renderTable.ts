@@ -1,6 +1,7 @@
 import { RequestItem } from "../../../recoil/interfaces";
 
 import { getCountKey } from "./getCountKey";
+import { getTableData } from "./getTableData";
 
 export const renderTableStyle = () => `
  <style>
@@ -33,42 +34,50 @@ export const renderTableStyle = () => `
 `;
 
 export const renderTable = (
-  item: RequestItem,
-  presentSizes: Array<string>,
-  countMap: Record<string, string>,
-  omitStyle?: boolean
+  items: RequestItem[],
+  brandName: string,
+  orderDate: string
 ) => `
-  ${omitStyle ? "" : renderTableStyle()}   
-  <h3>Название модели: ${item.name}</h3>
-  <h5>Комментарии: ${item.comments}</h5>
-  <div class="item">
-      <table>
-          <thead>
-              <td>Цвет</td>
-              ${presentSizes
-                .map((size) => `<td class="count">${size}</td>`)
-                .join("")}
-          </thead>
-          <tbody>
-              ${item.colors
-                .map(
-                  ({ color }) =>
-                    `<tr>
-                      <td>${color}</td>
-                      ${presentSizes
-                        .map(
-                          (size) =>
-                            `<td class="count">${
-                              countMap[getCountKey(color, size)] || ""
-                            }</td>`
-                        )
-                        .join("")}</tr>`
-                )
-                .join("")}
-          </tbody>
-      </table>
-      <img src="${item.imageUrl}" alt="Без картинки" class="image">
-  </div>
+  ${renderTableStyle()}
+  <h1>Назва бренду: ${brandName}</h1>
+  <h2>Дата замовлення: ${orderDate}</h2>
+  ${items.map(renderSingleItem).join("")}
   <br/>
   <br/>
 `;
+
+const renderSingleItem = (item: RequestItem) => {
+  const { countsMap, sizes } = getTableData(item.colors);
+  return `
+      <h3>Назва моделі: ${item.name}</h3>
+      <h5>Коментарі: ${item.comments}</h5>
+      <div class="item">
+          <table>
+              <thead>
+                  <td>Колір</td>
+                  ${sizes
+                    .map((size) => `<td class="count">${size}</td>`)
+                    .join("")}
+              </thead>
+              <tbody>
+                  ${item.colors
+                    .map(
+                      ({ color }) =>
+                        `<tr>
+                          <td>${color}</td>
+                          ${sizes
+                            .map(
+                              (size) =>
+                                `<td class="count">${
+                                  countsMap[getCountKey(color, size)] || ""
+                                }</td>`
+                            )
+                            .join("")}</tr>`
+                    )
+                    .join("")}
+              </tbody>
+          </table>
+          <img src="${item.imageUrl}" alt="Без світлини" class="image">
+      </div>
+    `;
+};

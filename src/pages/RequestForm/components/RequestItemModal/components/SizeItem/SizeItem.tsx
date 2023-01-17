@@ -11,7 +11,7 @@ import {
 import { Controller, useWatch } from "react-hook-form";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCross, faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import { SIZES } from "../../../../contants";
 
@@ -23,7 +23,6 @@ import {
   DeleteSize,
   Root,
   SizeFormControl,
-  SizeWrap,
   StyledSelect,
 } from "./SizeItem.styled";
 import { SizeItemProps } from "./SizeItem.interfaces";
@@ -81,7 +80,7 @@ const SizeItem: React.FC<SizeItemProps> = (props) => {
         />
       ) : (
         <SizeFormControl>
-          <InputLabel>Размер</InputLabel>
+          <InputLabel>Розмір</InputLabel>
           <Controller
             name={`${basePath}.size`}
             render={(field, { invalid }) => (

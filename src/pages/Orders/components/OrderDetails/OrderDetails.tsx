@@ -1,6 +1,5 @@
-import React, { memo, useCallback, useMemo } from "react";
+import React, { memo, useCallback, useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 import { find } from "lodash";
 
 import { Button, IconButton, Typography } from "@material-ui/core";
@@ -9,15 +8,17 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { useMutation } from "react-query";
+
 import { ScrollContainer } from "../../../../shared/styled";
-
-import { ordersSelector } from "../../../../recoil/orders/selectors";
-
-import { getTableData } from "../../utils/getTableData";
 
 import { renderTable } from "../../utils/renderTable";
 
 import { printHTMLString } from "../../utils/printHTMLString";
+
+import useOrders from "../../../../store/orders/hooks/useOrders";
+
+import { updateLastVisitedMutation } from "../../../../store/orders/mutations";
 
 import { Header, HeaderNav, ItemsGrid } from "./OrdersDetails.styled";
 
@@ -25,25 +26,25 @@ import OrderItem from "./components/OrderItem";
 
 const OrderDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const orders = useRecoilValue(ordersSelector);
+  const { orders } = useOrders();
+  const { mutate } = useMutation(updateLastVisitedMutation);
 
   const order = useMemo(() => find(orders, ["id", id]), [id, orders]);
-  const { brandName, dateCreated, requestItems } = order ?? {};
+  const { brandName = "", dateCreated = "", requestItems = [] } = order ?? {};
+
+  useEffect(() => {
+    if (order?.id) {
+      mutate({ id: order.id });
+    }
+  }, [order, mutate]);
 
   const handlePDFClick = useCallback(() => {
-    const allItemsString = requestItems
-      ?.map((item, index) => {
-        const { countsMap, sizes } = getTableData(item.colors);
-        return renderTable(item, sizes, countsMap, index !== 0);
-      })
-      ?.join("");
-
-    console.log("allItemsString", allItemsString);
+    const allItemsString = renderTable(requestItems, brandName, dateCreated);
 
     if (allItemsString) {
       printHTMLString(allItemsString);
     }
-  }, [requestItems]);
+  }, [brandName, requestItems]);
 
   if (!order) {
     return null;
@@ -59,8 +60,10 @@ const OrderDetails = () => {
             </IconButton>
           </Link>
           <div>
-            <Typography variant="h5">Название бренда: {brandName}</Typography>
-            <Typography variant="h6">Заказ создан: {dateCreated}</Typography>
+            <Typography variant="h5">Назва бренду: {brandName}</Typography>
+            <Typography variant="h6">
+              Замовлення створене: {dateCreated}
+            </Typography>
           </div>
         </HeaderNav>
 

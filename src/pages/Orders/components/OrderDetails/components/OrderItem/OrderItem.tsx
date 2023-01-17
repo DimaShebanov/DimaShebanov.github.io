@@ -40,14 +40,14 @@ const OrderItem: React.FC<OrderItemProps> = (props) => {
         avatar={
           <StyledAvatar variant="square" src={item.imageUrl} alt={item.name} />
         }
-        title={`Название изделия: ${name}`}
-        subheader={`Комментарии к изделию: ${comments}`}
+        title={`Назва виробу: ${name}`}
+        subheader={`Коментарі до виробу: ${comments}`}
       />
       <StyledCardContent>
         <Table size="medium">
           <TableHead>
             <TableRow>
-              <TableCell>Цвет</TableCell>
+              <TableCell>Колір</TableCell>
               {sizes.map((size) => (
                 <TableCell key={size}>{size}</TableCell>
               ))}

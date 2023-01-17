@@ -9,7 +9,7 @@ import {
   requestBrandNameSelector,
   requestItemsSelector,
 } from "../../../recoil/request/selectors";
-import { actions } from "../../../recoil/request/actions";
+import { sendRequest } from "../../../recoil/request/actions";
 
 const useRequestForm = () => {
   const [requestItems, setRequestItems] = useRecoilState(requestItemsSelector);
@@ -64,7 +64,7 @@ const useRequestForm = () => {
     [setRequestItems]
   );
 
-  const onSubmit = useRecoilCallback(actions);
+  const onSubmit = useRecoilCallback(sendRequest);
 
   return {
     requestItems,

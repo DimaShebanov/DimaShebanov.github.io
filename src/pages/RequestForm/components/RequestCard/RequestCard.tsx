@@ -27,7 +27,7 @@ const RequestCard: React.FC<RequestCardProps> = (props) => {
       <RemoveIcon onClick={removeRequest}>
         <FontAwesomeIcon icon={faTimes} size="xs" />
       </RemoveIcon>
-      <CardHeader title={name || `Изделие №${index}`} />
+      <CardHeader title={name || `Виріб №${index}`} />
       <CardContent>
         <Colors>
           {colors.map((color) => (
@@ -35,7 +35,7 @@ const RequestCard: React.FC<RequestCardProps> = (props) => {
           ))}
         </Colors>
         <Comments>
-          <Typography variant="caption">Комментарии</Typography>
+          <Typography variant="caption">Коментарі</Typography>
           <Typography variant="body1">{comments}</Typography>
         </Comments>
       </CardContent>

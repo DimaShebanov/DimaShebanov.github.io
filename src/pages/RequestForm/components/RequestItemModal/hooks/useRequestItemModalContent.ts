@@ -1,10 +1,10 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import { useFieldArray, useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { get } from "lodash";
+import { get, isNil } from "lodash";
 
 import getRequestItem from "../../../utils/getRequestItem";
 import getColor from "../../../utils/getColor";
@@ -26,11 +26,17 @@ const useRequestItemModalContent = (props: RequestItemModalProps) => {
     mode: "onChange",
     criteriaMode: "firstError",
   });
-  const { control, handleSubmit, errors } = formContext;
+  const { control, handleSubmit, errors, clearErrors, formState } = formContext;
   const { fields: colors, remove, append } = useFieldArray<RequestItemColor>({
     name: "colors",
     control,
   });
+
+  useEffect(() => {
+    if (formState.isValidating && !isNil(get(errors, "requestItem"))) {
+      clearErrors("requestItem");
+    }
+  }, [formState.isValidating]);
 
   const onColorAdd = useCallback(() => {
     append(getColor());

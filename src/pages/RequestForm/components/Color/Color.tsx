@@ -18,9 +18,9 @@ const Color: React.FC<ColorProps> = (props) => {
   return (
     <Root>
       <HeaderGrid>
-        <Typography variant="caption">Цвет изделия</Typography>
-        <Typography variant="caption">Размер</Typography>
-        <Typography variant="caption">Количество</Typography>
+        <Typography variant="caption">Колір виробу</Typography>
+        <Typography variant="caption">Розмір</Typography>
+        <Typography variant="caption">Кількість</Typography>
       </HeaderGrid>
       <Content>
         <ColorControl>

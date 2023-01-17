@@ -14,10 +14,13 @@ import { createBrowserHistory } from "history";
 
 import { RecoilRoot } from "recoil";
 
+import { QueryClientProvider } from "react-query";
+
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import theme from "./styling/theme";
 import SnackbarProvider from "./components/SnackbarProvider";
+import { queryClient } from "./recoil/queryClient";
 
 const history = createBrowserHistory();
 
@@ -25,13 +28,15 @@ ReactDOM.render(
   <React.StrictMode>
     <MuiThemeProvider theme={theme}>
       <ThemeProvider theme={theme}>
-        <RecoilRoot>
-          <SnackbarProvider>
-            <Router history={history}>
-              <App />
-            </Router>
-          </SnackbarProvider>
-        </RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <RecoilRoot>
+            <SnackbarProvider>
+              <Router history={history}>
+                <App />
+              </Router>
+            </SnackbarProvider>
+          </RecoilRoot>
+        </QueryClientProvider>
       </ThemeProvider>
     </MuiThemeProvider>
   </React.StrictMode>,

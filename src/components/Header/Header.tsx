@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler, useCallback, useRef } from "react";
 import {
   AppBar,
   Avatar,
@@ -9,29 +9,59 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import Auth from "../Auth";
+import { useHistory } from "react-router-dom";
+
+import { useRecoilValue } from "recoil";
 
 import logoImg from "../../img/logo.jpg";
 
-import { Content, Logo } from "./Header.styled";
-import useHeader from "./hooks";
+import useToggleState from "../../shared/hooks";
+
+import Auth from "../Auth";
+import { userAtom } from "../../recoil/user/atoms";
+import { auth } from "../../firebase/localFirebase";
+import routes from "../../routes";
+import { DOUBLE_TAP_THRESHOLD } from "../../constants";
+
+import { Content, Logo, LogoWrapper } from "./Header.styled";
 
 const Header: React.FC = () => {
-  const {
-    authOpen,
-    closeAuth,
-    menuOpen,
-    openMenu,
-    closeMenu,
-    menuAnchor,
-    name,
-    photoUrl,
-    isLogged,
-    logout,
-    goToOrders,
-    onLogoClick,
-    onTitleClick,
-  } = useHeader();
+  const { push } = useHistory();
+  const [authOpen, openAuth, closeAuth] = useToggleState(false);
+  const [menuOpen, openMenu, closeMenu] = useToggleState(false);
+  const tapTime = useRef<number | null>(null);
+  const menuAnchor = useRef(null);
+  const user = useRecoilValue(userAtom);
+  const { name, photoUrl, isLogged } = user;
+
+  const logout = useCallback(() => {
+    auth.signOut();
+  }, []);
+
+  const goToOrders = useCallback(() => {
+    push(routes.orders.path);
+    closeMenu();
+  }, [closeMenu, push]);
+
+  const onLogoClick: MouseEventHandler = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!tapTime.current) {
+        tapTime.current = Date.now();
+        return;
+      }
+      if (Date.now() - tapTime.current < DOUBLE_TAP_THRESHOLD) {
+        openAuth();
+      }
+
+      tapTime.current = null;
+    },
+    [openAuth]
+  );
+
+  const onTitleClick = useCallback(() => {
+    push(routes.home.path);
+  }, [push]);
 
   return (
     <>
@@ -39,12 +69,16 @@ const Header: React.FC = () => {
         <Toolbar>
           <Content>
             <Box display="flex" alignItems="center">
-              <Box display="flex" alignItems="center">
+              <LogoWrapper
+                isLogged={isLogged}
+                display="flex"
+                alignItems="center"
+              >
                 <Logo src={logoImg} alt="GUS" onClick={onLogoClick} />
                 <Typography variant="h6" color="inherit" onClick={onTitleClick}>
                   MAMA I GUS
                 </Typography>
-              </Box>
+              </LogoWrapper>
             </Box>
             {isLogged ? (
               <Avatar
@@ -65,8 +99,8 @@ const Header: React.FC = () => {
             open={menuOpen}
             onClose={closeMenu}
           >
-            <MenuItem onClick={logout}>Выйти</MenuItem>
-            <MenuItem onClick={goToOrders}>Список заказов</MenuItem>
+            <MenuItem onClick={logout}>Вийти</MenuItem>
+            <MenuItem onClick={goToOrders}>Список замовленнь</MenuItem>
           </Menu>
         ) : null}
       </AppBar>

@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { isEmpty } from "lodash";
+import { get, isEmpty } from "lodash";
 
 import { RequestItemModalProps } from "./RequestItemModalContent.interfaces";
 
@@ -43,11 +43,14 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
   const {
     formState: { isDirty, errors },
   } = formContext;
+  const itemError = get(errors, "requestItem.message");
+  const hasItemError = !isEmpty(itemError);
 
   return (
     <Root open={isOpen} onClose={onClose}>
-      <Header>Добавить новое изделие</Header>
+      <Header>Додати новий виріб</Header>
       <DialogContent>
+        <FormHelperText error={hasItemError}>{itemError}</FormHelperText>
         <FormProvider {...formContext}>
           <TitleWrap>
             <Controller
@@ -67,7 +70,7 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
                   <FormControl fullWidth>
                     <TextField
                       {...field}
-                      label="Что шьем?"
+                      label="Що шиємо?"
                       fullWidth
                       margin="none"
                     />
@@ -84,7 +87,7 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
                     {...field}
                     margin="none"
                     fullWidth
-                    label="Комментарии?"
+                    label="Коментарі?"
                     multiline
                   />
                 )}
@@ -92,7 +95,7 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
             </TitleInputs>
           </TitleWrap>
 
-          <Typography variant="h6">Цвета</Typography>
+          <Typography variant="h6">Кольори</Typography>
           <ColorsWrap>
             {colors.map((color, colorIndex) => (
               <ColorItem
@@ -110,19 +113,19 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
             color="secondary"
             onClick={onColorAdd}
           >
-            + Добавить цвет
+            + Додати колір
           </Button>
         </FormProvider>
       </DialogContent>
       <Footer>
-        <Button onClick={onClose}>Отмена</Button>
+        <Button onClick={onClose}>Відміна</Button>
         <SubmitButton
           onClick={onSubmit}
           disabled={!isDirty || !isEmpty(errors)}
           color="primary"
           variant="contained"
         >
-          Сохранить
+          Зберегти
         </SubmitButton>
       </Footer>
     </Root>
