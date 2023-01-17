@@ -1,4 +1,4 @@
-import { RequestItemColor } from "../../../../../../../../recoil/interfaces";
+import { RequestItemColor } from "../../../../../../../../types/request-types";
 
 export interface OrderColorProps {
   item: RequestItemColor;

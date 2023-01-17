@@ -1,6 +1,4 @@
-import React, { memo } from "react";
-
-import { useRecoilCallback } from "recoil";
+import React, { memo, useContext } from "react";
 
 import { Route, Switch, useHistory } from "react-router-dom";
 
@@ -10,10 +8,11 @@ import { NervousGoose, ScrollContainer } from "../../shared/styled";
 
 import Loading from "../../components/Loading";
 
-import { showSnackbar } from "../../recoil/snacks/actions";
-import { SNACKBAR_TYPES } from "../../recoil/snacks/interfaces";
-
 import useOrders from "../../store/orders/hooks/useOrders";
+
+import SnackbarContext from "../../components/SnackbarProvider/SnackbarContext";
+
+import { SNACKBAR_TYPES } from "../../types/snack-types";
 
 import OrdersList from "./components/OrdersList";
 
@@ -22,10 +21,10 @@ import OrderDetails from "./components/OrderDetails";
 const Orders = () => {
   const { replace } = useHistory();
   const { isLoading, isError } = useOrders();
-  const openSnack = useRecoilCallback(showSnackbar);
+  const { showSnack } = useContext(SnackbarContext);
 
   if (isError) {
-    openSnack({
+    showSnack({
       type: SNACKBAR_TYPES.error,
       icon: <NervousGoose />,
       content:

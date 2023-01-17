@@ -3,7 +3,7 @@ import { useCallback, useLayoutEffect, useMemo } from "react";
 
 import getSize from "../../../../../utils/getSize";
 import { ColorItemProps } from "../ColorItem.interfaces";
-import { RequestItemColorSize } from "../../../../../../../recoil/interfaces";
+import { RequestItemColorSize } from "../../../../../../../types/request-types";
 
 const useColorItem = (props: ColorItemProps) => {
   const { index, onColorRemove, item, getError } = props;

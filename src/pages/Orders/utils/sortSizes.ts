@@ -1,6 +1,6 @@
 import { orderBy } from "lodash";
 
-import { Size } from "../../../recoil/interfaces";
+import { Size } from "../../../types/request-types";
 
 const WeightBySize = {
   [Size.XXS]: 0,

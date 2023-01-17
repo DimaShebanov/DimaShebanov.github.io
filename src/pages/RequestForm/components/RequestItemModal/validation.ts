@@ -1,7 +1,7 @@
 import { isNumber } from "lodash";
 import { array, number, object, string } from "yup";
 
-import { RequestItem, RequestItemColor } from "../../../../recoil/interfaces";
+import { RequestItem, RequestItemColor } from "../../../../types/request-types";
 
 const REQUIRED_MESSAGE = "Це поле обов'язкове";
 

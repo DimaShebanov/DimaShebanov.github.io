@@ -17,7 +17,7 @@ import { SIZES } from "../../../../contants";
 
 import { CUSTOM_SIZE } from "../../../../../../constants";
 
-import { Size } from "../../../../../../recoil/interfaces";
+import { Size } from "../../../../../../types/request-types";
 
 import {
   DeleteSize,

@@ -1,6 +1,6 @@
 import { uniq } from "lodash";
 
-import { RequestItemColor, Size } from "../../../recoil/interfaces";
+import { RequestItemColor, Size } from "../../../types/request-types";
 
 import { getCountKey } from "./getCountKey";
 import { sortSizes } from "./sortSizes";

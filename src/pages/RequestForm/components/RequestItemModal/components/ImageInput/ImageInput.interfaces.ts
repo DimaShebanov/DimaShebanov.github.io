@@ -1,4 +1,4 @@
-import { RequestItemImage } from "../../../../../../recoil/interfaces";
+import { RequestItemImage } from "../../../../../../types/request-types";
 
 export interface ImageInputProps {
   value: RequestItemImage | undefined;

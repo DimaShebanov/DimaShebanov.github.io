@@ -1,4 +1,4 @@
-import { RequestItem } from "../../../recoil/interfaces";
+import { RequestItem } from "../../../types/request-types";
 
 import { getCountKey } from "./getCountKey";
 import { getTableData } from "./getTableData";

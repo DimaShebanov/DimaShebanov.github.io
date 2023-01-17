@@ -1,9 +1,3 @@
-import { CallbackInterface } from "recoil";
-
-export type RecoilCallback<T = undefined> = (
-  opts: CallbackInterface
-) => (args: T) => void | Promise<void>;
-
 export enum Size {
   XXS = "XXS",
   XS = "XS",

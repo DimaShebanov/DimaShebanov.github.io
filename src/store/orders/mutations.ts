@@ -6,7 +6,7 @@ import { firestore } from "../../firebase/localFirebase";
 
 import { REQUESTS_COLLECTION } from "../../firebase/constants";
 
-import { queryClient } from "../../recoil/queryClient";
+import { queryClient } from "../queryClient";
 import { queryKeys } from "../queryKeys";
 
 import toMilliseconds from "../../utils/toMilliseconds";

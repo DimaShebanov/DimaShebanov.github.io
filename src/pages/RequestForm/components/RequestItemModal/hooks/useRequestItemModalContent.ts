@@ -13,7 +13,7 @@ import requestItemSchema from "../validation";
 import {
   RequestItem,
   RequestItemColor,
-} from "../../../../../recoil/interfaces";
+} from "../../../../../types/request-types";
 
 const resolver = yupResolver<RequestItem>(requestItemSchema);
 

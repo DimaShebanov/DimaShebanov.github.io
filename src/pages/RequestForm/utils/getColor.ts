@@ -1,6 +1,6 @@
 import faker from "faker";
 
-import { RequestItemColor } from "../../../recoil/interfaces";
+import { RequestItemColor } from "../../../types/request-types";
 
 import getSize from "./getSize";
 

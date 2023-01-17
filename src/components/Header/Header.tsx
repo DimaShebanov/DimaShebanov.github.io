@@ -11,17 +11,16 @@ import {
 
 import { useHistory } from "react-router-dom";
 
-import { useRecoilValue } from "recoil";
-
 import logoImg from "../../img/logo.jpg";
 
 import useToggleState from "../../shared/hooks";
 
 import Auth from "../Auth";
-import { userAtom } from "../../recoil/user/atoms";
 import { auth } from "../../firebase/localFirebase";
 import routes from "../../routes";
 import { DOUBLE_TAP_THRESHOLD } from "../../constants";
+
+import useUser from "../../store/user/hooks/useUser";
 
 import { Content, Logo, LogoWrapper } from "./Header.styled";
 
@@ -31,8 +30,8 @@ const Header: React.FC = () => {
   const [menuOpen, openMenu, closeMenu] = useToggleState(false);
   const tapTime = useRef<number | null>(null);
   const menuAnchor = useRef(null);
-  const user = useRecoilValue(userAtom);
-  const { name, photoUrl, isLogged } = user;
+  const { user } = useUser();
+  const { name, photoUrl, isLogged } = user ?? {};
 
   const logout = useCallback(() => {
     auth.signOut();
