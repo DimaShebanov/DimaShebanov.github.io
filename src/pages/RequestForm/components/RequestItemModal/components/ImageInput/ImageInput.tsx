@@ -44,7 +44,8 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
           variant="outlined"
           color="primary"
         >
-          <FontAwesomeIcon icon={faPlus} size="2x" />
+          Додати фото
+          {/* <FontAwesomeIcon icon={faPlus} size="2x" /> */}
         </AddImageButton>
       )}
     </InputRoot>

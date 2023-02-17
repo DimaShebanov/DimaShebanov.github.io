@@ -15,6 +15,7 @@ import { get, isEmpty } from "lodash";
 import { RequestItemModalProps } from "./RequestItemModalContent.interfaces";
 
 import {
+  ActionsWrap,
   ColorsWrap,
   Footer,
   Header,
@@ -44,13 +45,14 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
     formState: { isDirty, errors },
   } = formContext;
   const itemError = get(errors, "requestItem.message");
-  const hasItemError = !isEmpty(itemError);
+  const imageError = get(errors, "image.message");
+  const hasFooterError = !isEmpty(itemError) || !isEmpty(imageError);
+  const footerError = itemError ?? imageError;
 
   return (
     <Root open={isOpen} onClose={onClose}>
       <Header>Додати новий виріб</Header>
       <DialogContent>
-        <FormHelperText error={hasItemError}>{itemError}</FormHelperText>
         <FormProvider {...formContext}>
           <TitleWrap>
             <Controller
@@ -118,15 +120,18 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
         </FormProvider>
       </DialogContent>
       <Footer>
-        <Button onClick={onClose}>Відміна</Button>
-        <SubmitButton
-          onClick={onSubmit}
-          disabled={!isDirty || !isEmpty(errors)}
-          color="primary"
-          variant="contained"
-        >
-          Зберегти
-        </SubmitButton>
+        <FormHelperText error={hasFooterError}>{footerError}</FormHelperText>
+        <ActionsWrap>
+          <Button onClick={onClose}>Відміна</Button>
+          <SubmitButton
+            onClick={onSubmit}
+            disabled={!isDirty || !isEmpty(errors)}
+            color="primary"
+            variant="contained"
+          >
+            Зберегти
+          </SubmitButton>
+        </ActionsWrap>
       </Footer>
     </Root>
   );

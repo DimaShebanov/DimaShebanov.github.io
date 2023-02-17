@@ -45,13 +45,16 @@ export const Column = styled.div`
   margin-bottom: ${spaceMixin(1)};
 `;
 
-export const StyledDivider = styled(Divider)`
-  background-color: ${({ theme }) => theme.palette.grey[400]};
-  margin-top: ${spaceMixin(1)};
+export const ActionsWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  flex: 1 0 250px;
 `;
 
 export const Footer = styled(DialogActions)`
   font-weight: bold;
+  justify-content: space-between;
+  flex-wrap: wrap;
   border-top: 1px solid ${({ theme }) => theme.palette.divider};
   //box-shadow: 0 7px 16px 4px rgb(0 0 0 / 45%);
 `;

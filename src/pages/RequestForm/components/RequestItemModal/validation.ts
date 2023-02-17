@@ -13,8 +13,7 @@ const STRING_RULE = string()
 const requestItemSchema = object()
   .test({
     name: "requestItem",
-    message:
-      "Загальна кількіть одиниць моделі в усіх кольорах і розмірах не може бути меньше 10",
+    message: "Загальна кількіть одиниць має бути не меньше 10",
     test: (value) => {
       const res = ((value as unknown) as RequestItem)?.colors?.reduce(
         (acc, { sizes }: RequestItemColor) => {
@@ -34,7 +33,7 @@ const requestItemSchema = object()
   })
   .shape({
     name: STRING_RULE,
-    image: object().required("Обов'язково додайте фото"),
+    image: object().required("Обов'язково додайте фото виробу"),
     colors: array().of(
       object().shape({
         color: STRING_RULE,
