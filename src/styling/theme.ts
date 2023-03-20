@@ -1,7 +1,6 @@
 import { createTheme } from "@material-ui/core";
 import orange from "@material-ui/core/colors/orange";
 import yellow from "@material-ui/core/colors/yellow";
-import common from "@material-ui/core/colors/common";
 
 const theme = createTheme({
   palette: {

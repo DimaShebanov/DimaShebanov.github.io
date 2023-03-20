@@ -1,11 +1,5 @@
 import styled from "styled-components";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  Divider,
-} from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
 
 import { spaceMixin } from "../../../../styling/mixins";
 

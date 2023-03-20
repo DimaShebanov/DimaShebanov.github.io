@@ -1,4 +1,4 @@
-import { Size } from "../../types/request-types";
+import { RequestObject, Size } from "../../types/request-types";
 
 import { RequestItemDrawerState } from "./RequestForm.interfaces";
 
@@ -8,4 +8,7 @@ export const INITIAL_DRAWER_STATE: RequestItemDrawerState = {
   isOpen: false,
 };
 
-export const MODEL_NAMES = ["Мужское", "Женское", "Детское"];
+export const DEFAULT_REQUEST: RequestObject = {
+  brandName: "",
+  requestItems: [],
+};

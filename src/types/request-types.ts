@@ -21,17 +21,19 @@ export interface RequestItemColor {
 }
 
 export interface RequestItemImage {
-  file: File;
   url: string;
+  file?: File;
+  name: string;
 }
 
 export interface RequestItem {
+  // todo remove after monthly wipeout
+  imageUrl?: string;
   id: string;
   colors: Array<RequestItemColor>;
   name: string;
   comments?: string;
-  image?: RequestItemImage;
-  imageUrl?: string;
+  image: RequestItemImage;
 }
 
 export interface RequestObject {

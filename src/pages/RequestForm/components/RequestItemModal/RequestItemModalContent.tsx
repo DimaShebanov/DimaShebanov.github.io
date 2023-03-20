@@ -7,6 +7,7 @@ import {
   DialogContent,
   FormControl,
   FormHelperText,
+  LinearProgress,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -34,6 +35,8 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
     isOpen,
     formContext,
     colors,
+    isEdit,
+    imageLoading,
     onColorRemove,
     onColorAdd,
     onClose,
@@ -46,21 +49,33 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
   } = formContext;
   const itemError = get(errors, "requestItem.message");
   const imageError = get(errors, "image.message");
-  const hasFooterError = !isEmpty(itemError) || !isEmpty(imageError);
+  const hasFooterError =
+    !imageLoading && (!isEmpty(itemError) || !isEmpty(imageError));
   const footerError = itemError ?? imageError;
 
+  const getHelperText = () => {
+    if (imageLoading) {
+      return "Завантажуємо фото...";
+    }
+
+    return footerError;
+  };
+
   return (
-    <Root open={isOpen} onClose={onClose}>
-      <Header>Додати новий виріб</Header>
+    <Root open={isOpen} onClose={onClose} disableBackdropClick>
+      <Header>
+        {isEdit ? "Змінити створений виріб" : "Додати новий виріб"}
+      </Header>
       <DialogContent>
         <FormProvider {...formContext}>
           <TitleWrap>
+            <Controller name="id" render={() => <div />} />
             <Controller
               name="image"
               render={(field) => (
                 <ImageInput
                   value={field.value}
-                  onChange={(file) => field.onChange(file)}
+                  onChange={(image) => field.onChange(image)}
                   error={getError(field.name)}
                 />
               )}
@@ -119,8 +134,11 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
           </Button>
         </FormProvider>
       </DialogContent>
+      {imageLoading && <LinearProgress />}
       <Footer>
-        <FormHelperText error={hasFooterError}>{footerError}</FormHelperText>
+        <FormHelperText error={hasFooterError}>
+          {getHelperText()}
+        </FormHelperText>
         <ActionsWrap>
           <Button onClick={onClose}>Відміна</Button>
           <SubmitButton

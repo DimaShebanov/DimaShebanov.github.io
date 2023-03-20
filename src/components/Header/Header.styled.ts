@@ -3,7 +3,7 @@ import { Avatar, Box } from "@material-ui/core";
 
 import { spaceMixin } from "../../styling/mixins";
 
-export const LogoWrapper = styled(Box)<{ isLogged: boolean }>`
+export const LogoWrapper = styled(Box)<{ isLogged?: boolean }>`
   ${({ isLogged }) => isLogged && "cursor: pointer"}
 `;
 

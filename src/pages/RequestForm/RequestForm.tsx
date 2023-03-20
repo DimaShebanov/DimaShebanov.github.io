@@ -1,9 +1,10 @@
 import React, {
   ChangeEvent,
+  Dispatch,
+  SetStateAction,
   memo,
   useCallback,
   useContext,
-  useEffect,
   useState,
 } from "react";
 
@@ -17,11 +18,14 @@ import { useMutation } from "react-query";
 
 import produce from "immer";
 
-import { BRAND_NAME_STORAGE_KEY } from "../../constants";
+import { findIndex, isEmpty, isFunction } from "lodash";
 
 import { RequestItem, RequestObject } from "../../types/request-types";
 
-import { sendRequestMutation } from "../../store/request/mutations";
+import {
+  deleteImageMutation,
+  sendRequestMutation,
+} from "../../store/request/mutations";
 
 import SnackbarContext from "../../components/SnackbarProvider/SnackbarContext";
 
@@ -39,27 +43,42 @@ import {
 } from "./RequestForm.styled";
 import RequestCard from "./components/RequestCard";
 
-import { RequestItemDrawerState } from "./RequestForm.interfaces";
 import { INITIAL_DRAWER_STATE } from "./contants";
+import {
+  getLocalStorageRequest,
+  setLocalStorageRequest,
+} from "./utils/localStorage";
 
 const RequestForm = () => {
   const { showSnack } = useContext(SnackbarContext);
-  const storedBrandName = localStorage.getItem(BRAND_NAME_STORAGE_KEY) || "";
   const { isLoading, mutateAsync } = useMutation(sendRequestMutation);
+  const { mutate: deleteImageFromCloud } = useMutation(deleteImageMutation);
 
   const [drawerState, setDrawerState] = useState(INITIAL_DRAWER_STATE);
-  const [request, setRequest] = useState<RequestObject>({
-    brandName: localStorage.getItem(BRAND_NAME_STORAGE_KEY) || "",
-    requestItems: [],
-  } as RequestObject);
+  const [request, _setRequest] = useState<RequestObject>(
+    getLocalStorageRequest()
+  );
 
   const { brandName, requestItems } = request;
 
-  useEffect(() => {
-    if (storedBrandName !== brandName) {
-      localStorage.setItem(BRAND_NAME_STORAGE_KEY, brandName);
-    }
-  }, [brandName, storedBrandName]);
+  const setRequest: Dispatch<SetStateAction<RequestObject>> = useCallback(
+    (updater) => {
+      _setRequest((oldRequest) => {
+        let newRequest = updater;
+
+        if (isFunction(updater)) {
+          newRequest = updater(oldRequest);
+        }
+
+        newRequest = newRequest as RequestObject;
+
+        setLocalStorageRequest(newRequest);
+
+        return newRequest;
+      });
+    },
+    []
+  );
 
   const onBrandNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setRequest(
@@ -69,25 +88,21 @@ const RequestForm = () => {
     );
   }, []);
 
-  const handleDrawerSubmit = useCallback(
-    (submittedItem: RequestItem) => {
-      const { id } = submittedItem;
-      const { editItem } = drawerState;
-      setRequest(
-        produce((draft) => {
-          if (editItem) {
-            draft.requestItems = draft.requestItems.map((item) =>
-              item.id === id ? submittedItem : item
-            );
-          } else {
-            draft.requestItems.push(submittedItem);
-          }
-        })
-      );
-      setDrawerState(INITIAL_DRAWER_STATE);
-    },
-    [drawerState]
-  );
+  const handleDrawerSubmit = useCallback((submittedItem: RequestItem) => {
+    const { id } = submittedItem;
+    setRequest(
+      produce((draft) => {
+        const itemIndex = findIndex(draft.requestItems, { id });
+
+        if (itemIndex !== -1) {
+          draft.requestItems.splice(itemIndex, 1, submittedItem);
+        } else {
+          draft.requestItems.push(submittedItem);
+        }
+      })
+    );
+    setDrawerState(INITIAL_DRAWER_STATE);
+  }, []);
 
   const openRequestModal = useCallback((editItem?: RequestItem) => {
     setDrawerState({
@@ -104,18 +119,26 @@ const RequestForm = () => {
     openRequestModal();
   }, [openRequestModal]);
 
-  const removeRequestItem = useCallback(
-    (targetId) =>
-      setRequest(
-        produce((draft) =>
-          draft.requestItems.filter(({ id }) => id !== targetId)
-        )
-      ),
-    []
-  );
+  const removeRequestItem = useCallback((targetId) => {
+    setRequest(
+      produce((draft) => {
+        draft.requestItems = draft.requestItems.filter(({ id, image }) => {
+          deleteImageFromCloud({ ...image });
+          return id !== targetId;
+        });
+      })
+    );
+  }, []);
 
   const onSubmit = useCallback(async () => {
     try {
+      if (isEmpty(brandName)) {
+        showSnack({
+          type: SNACKBAR_TYPES.error,
+          content: "Будь ласка, напишіть назву свого бренду",
+        });
+        return;
+      }
       await mutateAsync(request);
       showSnack({
         content: "Замовлення відправлене",

@@ -1,4 +1,4 @@
-import { RequestObject } from "../interfaces";
+import { RequestObject } from "../../types/request-types";
 
 export interface FirebaseOrder extends RequestObject {
   dateCreated: {

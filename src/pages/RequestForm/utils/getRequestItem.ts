@@ -1,12 +1,16 @@
-import faker from "faker";
+import { uniqueId } from "lodash";
 
 import { RequestItem } from "../../../types/request-types";
 
 import getColor from "./getColor";
 
 const getRequestItem = (): RequestItem => ({
-  id: faker.random.uuid(),
+  id: uniqueId(),
   colors: [getColor()],
+  image: {
+    url: "",
+    name: "",
+  },
   name: "",
   comments: "",
 });

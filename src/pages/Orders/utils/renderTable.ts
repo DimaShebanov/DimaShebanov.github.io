@@ -1,3 +1,5 @@
+import { isEmpty } from "lodash";
+
 import { RequestItem } from "../../../types/request-types";
 
 import { getCountKey } from "./getCountKey";
@@ -5,10 +7,22 @@ import { getTableData } from "./getTableData";
 
 export const renderTableStyle = () => `
  <style>
+    body {
+        padding: 16px;
+    }
+    
+    h3 {
+        white-space: pre-wrap;
+    }
+    
     .item {
         display: flex;
         justify-content: space-between;
         gap: 16px;
+    }
+    
+    @media print {
+        .pagebreak { page-break-before: always; } /* page-break-after works, as well */
     }
     
     .image {
@@ -46,11 +60,19 @@ export const renderTable = (
   <br/>
 `;
 
-const renderSingleItem = (item: RequestItem) => {
+const getPageBreak = (index: number, length: number) =>
+  index % 2 && index !== length - 1 ? '<div class="pagebreak"/>' : "";
+
+const renderSingleItem = (
+  item: RequestItem,
+  index: number,
+  arr: RequestItem[]
+) => {
   const { countsMap, sizes } = getTableData(item.colors);
+  const hasComments = !isEmpty(item.comments);
   return `
-      <h3>Назва моделі: ${item.name}</h3>
-      <h5>Коментарі: ${item.comments}</h5>
+      <h2>Назва моделі: ${item.name}</h2>
+      <h3>Коментарі: ${hasComments ? "\n" : ""}${item.comments}</h3>
       <div class="item">
           <table>
               <thead>
@@ -77,7 +99,8 @@ const renderSingleItem = (item: RequestItem) => {
                     .join("")}
               </tbody>
           </table>
-          <img src="${item.imageUrl}" alt="Без світлини" class="image">
+          <img src="${item.image?.url}" alt="Без світлини" class="image">
       </div>
+      ${getPageBreak(index, arr.length)}
     `;
 };

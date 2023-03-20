@@ -2,10 +2,8 @@ import React, { useCallback, useMemo, useState } from "react";
 import {
   FormControl,
   FormHelperText,
-  IconButton,
   InputAdornment,
   InputLabel,
-  // MenuItem,
   TextField,
 } from "@material-ui/core";
 import { Controller, useWatch } from "react-hook-form";
@@ -31,6 +29,7 @@ const SizeItem: React.FC<SizeItemProps> = (props) => {
   const { index, basePath, onRemove, getError, usedSizes } = props;
   const [showCustomSize, setShowCustomSize] = useState(false);
   const sizeValue = useWatch<string>({ name: `${basePath}.size` });
+  const someString: string = 99;
 
   const options = useMemo(
     () =>

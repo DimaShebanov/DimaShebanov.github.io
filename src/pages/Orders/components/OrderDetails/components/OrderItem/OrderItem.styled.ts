@@ -15,3 +15,7 @@ export const StyledAvatar = styled(Avatar)`
   width: 60px;
   height: 60px;
 `;
+
+export const Description = styled.div`
+  white-space: pre-wrap;
+`;

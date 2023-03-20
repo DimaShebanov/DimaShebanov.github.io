@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react";
+import React, { MouseEventHandler, memo, useCallback } from "react";
 import { CardContent, CardHeader, Typography } from "@material-ui/core";
 
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -18,9 +18,13 @@ const RequestCard: React.FC<RequestCardProps> = (props) => {
     onEdit(item);
   }, [item, onEdit]);
 
-  const removeRequest = useCallback(() => {
-    onRemove(id);
-  }, [id, onRemove]);
+  const removeRequest: MouseEventHandler = useCallback(
+    (e) => {
+      e.stopPropagation();
+      onRemove(id);
+    },
+    [id, onRemove]
+  );
 
   return (
     <StyledCard elevation={5} onClick={handleEdit}>

@@ -1,8 +1,5 @@
 import React, { ChangeEvent, useCallback, useRef } from "react";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
+import md5 from "md5";
 
 import { ImageInputProps } from "./ImageInput.interfaces";
 import {
@@ -20,10 +17,9 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
     (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0] || ({} as File);
       const url = URL.createObjectURL(file);
-      onChange({
-        file,
-        url,
-      });
+      const name = md5(file?.name + file?.lastModified + file?.size);
+
+      onChange({ file, name, url });
     },
     [onChange]
   );
@@ -32,22 +28,29 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
     inputRef.current?.click();
   }, []);
 
+  const getContent = () => {
+    if (value?.url) {
+      return (
+        <Preview src={value?.url} alt={value?.name} onClick={handleOpen} />
+      );
+    }
+
+    return (
+      <AddImageButton
+        error={!!error}
+        onClick={handleOpen}
+        variant="outlined"
+        color="primary"
+      >
+        Додати фото
+      </AddImageButton>
+    );
+  };
+
   return (
     <InputRoot>
       <HiddenInput type="file" onChange={handleChange} ref={inputRef} />
-      {value ? (
-        <Preview src={value?.url} alt="" onClick={handleOpen} />
-      ) : (
-        <AddImageButton
-          error={!!error}
-          onClick={handleOpen}
-          variant="outlined"
-          color="primary"
-        >
-          Додати фото
-          {/* <FontAwesomeIcon icon={faPlus} size="2x" /> */}
-        </AddImageButton>
-      )}
+      {getContent()}
     </InputRoot>
   );
 };

@@ -3,11 +3,11 @@ import React, { useCallback, useMemo, useState } from "react";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
-import { Snack } from "../../types/snack-types";
+import { SNACKBAR_TYPES, Snack } from "../../types/snack-types";
 
 import SnackbarContext from "./SnackbarContext";
 
-import { SNACKBAR_POSITION } from "./constants";
+import { ICON_BY_TYPE, SNACKBAR_POSITION } from "./constants";
 
 const SnackbarProvider: React.FC = ({ children }) => {
   const [snackbar, setSnackbar] = useState<Snack>({ isOpen: false });
@@ -16,6 +16,8 @@ const SnackbarProvider: React.FC = ({ children }) => {
   const showSnack = useCallback((snackConfig: Partial<Snack>) => {
     setSnackbar({
       ...snackConfig,
+      icon:
+        snackConfig.icon ?? ICON_BY_TYPE[snackConfig.type as SNACKBAR_TYPES],
       isOpen: true,
     });
   }, []);

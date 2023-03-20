@@ -1,7 +1,6 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 
 import {
-  Avatar,
   CardHeader,
   Table,
   TableBody,
@@ -10,15 +9,14 @@ import {
   TableRow,
 } from "@material-ui/core";
 
+import { isEmpty } from "lodash";
+
 import { getTableData } from "../../../../utils/getTableData";
-
-import { renderTable } from "../../../../utils/renderTable";
-
-import { printHTMLString } from "../../../../utils/printHTMLString";
 
 import { OrderItemProps } from "./OrderItem.interfaces";
 import OrderColor from "./components/OrderColor";
 import {
+  Description,
   StyledAvatar,
   StyledCard,
   StyledCardContent,
@@ -29,19 +27,25 @@ const OrderItem: React.FC<OrderItemProps> = (props) => {
   const { name, comments, colors } = item;
 
   const { sizes, countsMap } = useMemo(() => getTableData(colors), [colors]);
-
-  const handleCardClick = useCallback(() => {
-    printHTMLString(renderTable(item, sizes, countsMap));
-  }, [countsMap, item, sizes]);
+  const hasComment = !isEmpty(comments);
 
   return (
-    <StyledCard onClick={handleCardClick}>
+    <StyledCard>
       <CardHeader
         avatar={
-          <StyledAvatar variant="square" src={item.imageUrl} alt={item.name} />
+          <StyledAvatar
+            variant="square"
+            src={item.image?.url}
+            alt={item.name}
+          />
         }
         title={`Назва виробу: ${name}`}
-        subheader={`Коментарі до виробу: ${comments}`}
+        subheader={
+          <Description>
+            Коментарі до виробу: {hasComment && "\n"}
+            {comments}
+          </Description>
+        }
       />
       <StyledCardContent>
         <Table size="medium">

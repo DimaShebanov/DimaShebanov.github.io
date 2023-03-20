@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useFieldArray, useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { get, isNil } from "lodash";
+import { get, isEmpty, isNil } from "lodash";
+
+import { useMutation } from "react-query";
 
 import getRequestItem from "../../../utils/getRequestItem";
 import getColor from "../../../utils/getColor";
@@ -14,11 +16,23 @@ import {
   RequestItem,
   RequestItemColor,
 } from "../../../../../types/request-types";
+import {
+  deleteImageMutation,
+  uploadImageMutation,
+} from "../../../../../store/request/mutations";
 
 const resolver = yupResolver<RequestItem>(requestItemSchema);
 
 const useRequestItemModalContent = (props: RequestItemModalProps) => {
   const { onSave, editItem } = props;
+  const editItemRef = useRef<RequestItem | undefined>(editItem);
+  editItemRef.current = editItem;
+  const { isLoading: deleteLoading, mutateAsync: deleteImage } = useMutation(
+    deleteImageMutation
+  );
+  const { isLoading: uploadLoading, mutateAsync: uploadImage } = useMutation(
+    uploadImageMutation
+  );
 
   const formContext = useForm<RequestItem>({
     defaultValues: editItem || getRequestItem(),
@@ -54,12 +68,34 @@ const useRequestItemModalContent = (props: RequestItemModalProps) => {
     [errors]
   );
 
-  const onSubmit = useMemo(() => handleSubmit(onSave), [handleSubmit, onSave]);
+  const handleSave = useCallback(async (requestItem: RequestItem) => {
+    if (editItemRef.current?.image) {
+      await deleteImage(editItemRef.current.image);
+    }
+
+    const image = await uploadImage(requestItem.image);
+    const preparedRequestItem = {
+      ...requestItem,
+      image,
+    };
+
+    onSave(preparedRequestItem);
+  }, []);
+
+  const onSubmit = useMemo(() => handleSubmit(handleSave), [
+    handleSubmit,
+    onSave,
+  ]);
+
+  const isEdit = !isEmpty(editItem);
+  const imageLoading = deleteLoading || uploadLoading;
 
   return {
     ...props,
     formContext,
     colors,
+    isEdit,
+    imageLoading,
     onColorRemove,
     onColorAdd,
     onSubmit,
