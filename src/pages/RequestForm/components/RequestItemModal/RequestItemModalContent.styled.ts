@@ -46,11 +46,11 @@ export const ActionsWrap = styled.div`
 `;
 
 export const Footer = styled(DialogActions)`
+  box-shadow: 0 1px 6px 0 rgb(255 255 255 / 20%);
   font-weight: bold;
   justify-content: space-between;
   flex-wrap: wrap;
   border-top: 1px solid ${({ theme }) => theme.palette.divider};
-  //box-shadow: 0 7px 16px 4px rgb(0 0 0 / 45%);
 `;
 
 export const SubmitButton = styled(Button)`
