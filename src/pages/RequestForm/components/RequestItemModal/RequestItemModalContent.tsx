@@ -48,7 +48,7 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
     formState: { isDirty, errors },
   } = formContext;
   const itemError = get(errors, "requestItem.message");
-  const imageError = get(errors, "image.message");
+  const imageError = get(errors, "image.url.message");
   const hasFooterError =
     !imageLoading && (!isEmpty(itemError) || !isEmpty(imageError));
   const footerError = itemError ?? imageError;

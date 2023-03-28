@@ -33,7 +33,11 @@ const requestItemSchema = object()
   })
   .shape({
     name: STRING_RULE,
-    image: object().required("Обов'язково додайте фото виробу"),
+    image: object()
+      .shape({
+        url: string().required("Обов'язково додайте фото виробу"),
+      })
+      .required("Обов'язково додайте фото виробу"),
     colors: array().of(
       object().shape({
         color: STRING_RULE,
