@@ -7,7 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "yarn build && firebase deploy --only hosting",
-    "check": "tsc --noEmit && eslint --fix --ext .ts,.tsx ."
+    "codecheck": "tsc --noEmit && eslint --fix --ext .ts,.tsx ."
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",

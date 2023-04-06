@@ -1,6 +1,6 @@
 import { isEmpty } from "lodash";
 
-import { RequestItem } from "../../../types/request-types";
+import { RequestItem, Size } from "../../../types/request-types";
 
 import { getCountKey } from "./getCountKey";
 import { getTableData } from "./getTableData";
@@ -60,6 +60,28 @@ export const renderTable = (
   <br/>
 `;
 
+const renderColors = (
+  item: RequestItem,
+  sizes: Size[],
+  countsMap: Record<string, string>
+) =>
+  item.colors
+    .map(
+      ({ color }) =>
+        `<tr>
+            <td>${color}</td>
+            ${sizes
+              .map(
+                (size) =>
+                  `<td class="count">${
+                    countsMap[getCountKey(color, size)] || ""
+                  }</td>`
+              )
+              .join("")}
+        </tr>`
+    )
+    .join("");
+
 const getPageBreak = (index: number, length: number) =>
   index % 2 && index !== length - 1 ? '<div class="pagebreak"/>' : "";
 
@@ -72,33 +94,19 @@ const renderSingleItem = (
   const hasComments = !isEmpty(item.comments);
   return `
       <h2>Назва моделі: ${item.name}</h2>
-      <h3>Коментарі: ${hasComments ? "\n" : ""}${item.comments}</h3>
       <div class="item">
-          <table>
-              <thead>
-                  <td>Колір</td>
-                  ${sizes
-                    .map((size) => `<td class="count">${size}</td>`)
-                    .join("")}
-              </thead>
-              <tbody>
-                  ${item.colors
-                    .map(
-                      ({ color }) =>
-                        `<tr>
-                          <td>${color}</td>
-                          ${sizes
-                            .map(
-                              (size) =>
-                                `<td class="count">${
-                                  countsMap[getCountKey(color, size)] || ""
-                                }</td>`
-                            )
-                            .join("")}</tr>`
-                    )
-                    .join("")}
-              </tbody>
-          </table>
+          <div>
+              <h3>Коментарі: ${hasComments ? "\n" : ""}${item.comments}</h3>
+              <table>
+                  <thead>
+                     <td>Колір</td>
+                     ${sizes.map((size) => `<td class="count">${size}</td>`).join("")}
+                  </thead>
+                  <tbody>
+                    ${renderColors(item, sizes, countsMap)}
+                  </tbody>
+              </table>
+          </div>
           <img src="${item.image?.url}" alt="Без світлини" class="image">
       </div>
       ${getPageBreak(index, arr.length)}

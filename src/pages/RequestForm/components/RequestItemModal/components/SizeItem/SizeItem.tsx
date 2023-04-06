@@ -29,7 +29,6 @@ const SizeItem: React.FC<SizeItemProps> = (props) => {
   const { index, basePath, onRemove, getError, usedSizes } = props;
   const [showCustomSize, setShowCustomSize] = useState(false);
   const sizeValue = useWatch<string>({ name: `${basePath}.size` });
-  const someString: string = 99;
 
   const options = useMemo(
     () =>
