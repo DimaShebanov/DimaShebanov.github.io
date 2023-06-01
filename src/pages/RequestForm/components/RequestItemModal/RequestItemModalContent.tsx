@@ -16,7 +16,6 @@ import { get, isEmpty } from "lodash";
 import { RequestItemModalProps } from "./RequestItemModalContent.interfaces";
 
 import {
-  ActionsWrap,
   ColorsWrap,
   Footer,
   Header,
@@ -136,20 +135,20 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
       </DialogContent>
       {imageLoading && <LinearProgress />}
       <Footer>
+        <Button disabled={imageLoading} onClick={onClose}>
+          Відміна
+        </Button>
         <FormHelperText error={hasFooterError}>
           {getHelperText()}
         </FormHelperText>
-        <ActionsWrap>
-          <Button onClick={onClose}>Відміна</Button>
-          <SubmitButton
-            onClick={onSubmit}
-            disabled={!isDirty || !isEmpty(errors)}
-            color="primary"
-            variant="contained"
-          >
-            Зберегти
-          </SubmitButton>
-        </ActionsWrap>
+        <SubmitButton
+          onClick={onSubmit}
+          disabled={!isDirty || !isEmpty(errors) || imageLoading}
+          color="primary"
+          variant="contained"
+        >
+          Зберегти
+        </SubmitButton>
       </Footer>
     </Root>
   );

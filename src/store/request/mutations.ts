@@ -3,10 +3,8 @@ import firebase from "firebase";
 
 import { RequestItemImage, RequestObject } from "../../types/request-types";
 import { firestore, storageRef } from "../../firebase/localFirebase";
-import {
-  ERRORS_COLLECTION,
-  REQUESTS_COLLECTION,
-} from "../../firebase/constants";
+import { REQUESTS_COLLECTION } from "../../firebase/constants";
+import { handleError } from "../../utils/handleError";
 
 export const uploadImageMutation: MutationFunction<
   RequestItemImage,
@@ -39,9 +37,7 @@ export const sendRequestMutation: MutationFunction<
       requestItems: request.requestItems,
     });
   } catch (e) {
-    console.log("ERROR", e.message);
-    firestore.collection(ERRORS_COLLECTION).doc().set({
-      message: e.message,
-    });
+    console.error(e);
+    handleError(e);
   }
 };

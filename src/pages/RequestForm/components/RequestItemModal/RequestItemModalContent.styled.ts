@@ -39,12 +39,6 @@ export const Column = styled.div`
   margin-bottom: ${spaceMixin(1)};
 `;
 
-export const ActionsWrap = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  flex: 1 0 250px;
-`;
-
 export const Footer = styled(DialogActions)`
   box-shadow: 0 1px 6px 0 rgb(255 255 255 / 20%);
   font-weight: bold;
