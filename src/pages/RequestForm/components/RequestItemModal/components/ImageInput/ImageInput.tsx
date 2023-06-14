@@ -49,7 +49,12 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
 
   return (
     <InputRoot>
-      <HiddenInput type="file" onChange={handleChange} ref={inputRef} />
+      <HiddenInput
+        accept="image/*"
+        type="file"
+        onChange={handleChange}
+        ref={inputRef}
+      />
       {getContent()}
     </InputRoot>
   );

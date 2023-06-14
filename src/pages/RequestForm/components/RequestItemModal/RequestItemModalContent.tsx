@@ -28,6 +28,7 @@ import {
 import ColorItem from "./components/ColorItem";
 import useRequestItemModalContent from "./hooks";
 import ImageInput from "./components/ImageInput/ImageInput";
+import { IMAGE_UPLOAD_ERROR } from "./constants";
 
 const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
   const {
@@ -35,6 +36,7 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
     formContext,
     colors,
     isEdit,
+    imageUploadError,
     imageLoading,
     onColorRemove,
     onColorAdd,
@@ -46,11 +48,12 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
   const {
     formState: { isDirty, errors },
   } = formContext;
-  const itemError = get(errors, "requestItem.message");
-  const imageError = get(errors, "image.url.message");
-  const hasFooterError =
-    !imageLoading && (!isEmpty(itemError) || !isEmpty(imageError));
-  const footerError = itemError ?? imageError;
+  const itemValidationError = get(errors, "requestItem.message");
+  const imageError =
+    get(errors, "image.url.message") ??
+    (imageUploadError && IMAGE_UPLOAD_ERROR);
+  const footerError = itemValidationError ?? imageError;
+  const hasFooterError = !imageLoading && !isEmpty(footerError);
 
   const getHelperText = () => {
     if (imageLoading) {

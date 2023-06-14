@@ -30,9 +30,11 @@ const useRequestItemModalContent = (props: RequestItemModalProps) => {
   const { isLoading: deleteLoading, mutateAsync: deleteImage } = useMutation(
     deleteImageMutation
   );
-  const { isLoading: uploadLoading, mutateAsync: uploadImage } = useMutation(
-    uploadImageMutation
-  );
+  const {
+    isLoading: uploadLoading,
+    mutateAsync: uploadImage,
+    isError: imageUploadError,
+  } = useMutation(uploadImageMutation);
 
   const formContext = useForm<RequestItem>({
     defaultValues: editItem || getRequestItem(),
@@ -95,6 +97,7 @@ const useRequestItemModalContent = (props: RequestItemModalProps) => {
     formContext,
     colors,
     isEdit,
+    imageUploadError,
     imageLoading,
     onColorRemove,
     onColorAdd,
