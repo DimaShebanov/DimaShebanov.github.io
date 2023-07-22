@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { spaceMixin } from "../../styling/mixins";
+import { spacing } from "../../styling/mixins";
 
 const BackdropPositionStyles = css`
   top: 0;
@@ -26,6 +26,6 @@ export const Backdrop = styled.div`
 `;
 
 export const LoadingImage = styled.img`
-  width: ${spaceMixin(20)};
-  height: ${spaceMixin(10)};
+  width: ${spacing(20)};
+  height: ${spacing(10)};
 `;

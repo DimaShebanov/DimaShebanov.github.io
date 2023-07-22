@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button, Dialog, DialogActions, DialogTitle } from "@material-ui/core";
 
-import { spaceMixin } from "../../../../styling/mixins";
+import { spacing } from "../../../../styling/mixins";
 
 export const Root = styled(Dialog)`
   .MuiPaper-root {
@@ -15,18 +15,18 @@ export const Root = styled(Dialog)`
 export const TitleWrap = styled.div`
   display: flex;
   align-items: flex-end;
-  margin: ${spaceMixin(2)} 0;
+  margin: ${spacing(2)} 0;
 `;
 
 export const TitleInputs = styled.div`
-  margin-left: ${spaceMixin(3)};
+  margin-left: ${spacing(3)};
   flex-grow: 1;
 `;
 
 export const ColorsWrap = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  margin: ${spaceMixin(1)} -${spaceMixin(1)} ${spaceMixin(2)};
+  margin: ${spacing(1)} -${spacing(1)} ${spacing(2)};
 `;
 
 export const Header = styled(DialogTitle)`
@@ -36,7 +36,7 @@ export const Header = styled(DialogTitle)`
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: ${spaceMixin(1)};
+  margin-bottom: ${spacing(1)};
 `;
 
 export const Footer = styled(DialogActions)`
@@ -48,5 +48,5 @@ export const Footer = styled(DialogActions)`
 `;
 
 export const SubmitButton = styled(Button)`
-  margin-left: ${spaceMixin(2)};
+  margin-left: ${spacing(2)};
 `;

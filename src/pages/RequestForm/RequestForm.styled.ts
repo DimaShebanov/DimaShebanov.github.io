@@ -1,15 +1,15 @@
 import styled from "styled-components";
 import { Button, Card, CircularProgress } from "@material-ui/core";
 
-import { spaceMixin } from "../../styling/mixins";
+import { spacing } from "../../styling/mixins";
 import { ScrollContainer } from "../../shared/styled";
 
 export const ItemsWrapper = styled.div`
   display: grid;
-  grid-column-gap: ${spaceMixin(2)};
-  grid-row-gap: ${spaceMixin(2)};
-  grid-template-columns: repeat(auto-fill, minmax(${spaceMixin(40)}, 1fr));
-  grid-auto-rows: minmax(${spaceMixin(19)}, 1fr);
+  grid-column-gap: ${spacing(2)};
+  grid-row-gap: ${spacing(2)};
+  grid-template-columns: repeat(auto-fill, minmax(${spacing(40)}, 1fr));
+  grid-auto-rows: minmax(${spacing(19)}, 1fr);
 `;
 
 export const NewItemCard = styled(Card)`

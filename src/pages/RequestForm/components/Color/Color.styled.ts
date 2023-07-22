@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { FormControl } from "@material-ui/core";
 
-import { spaceMixin } from "../../../../styling/mixins";
+import { spacing } from "../../../../styling/mixins";
 
 export const Root = styled.div`
   &:not(:last-child) {
-    margin-bottom: ${spaceMixin(1)};
+    margin-bottom: ${spacing(1)};
   }
 `;
 

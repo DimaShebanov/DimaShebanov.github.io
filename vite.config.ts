@@ -1,9 +1,13 @@
+import path from "path";
+
+import svgr from "@svgr/rollup";
 import { defineConfig } from "vite";
 import pluginReact from "@vitejs/plugin-react";
 
 export default defineConfig({
-  plugins: [pluginReact()],
+  plugins: [pluginReact(), svgr({ svgo: false })],
   build: {
+    assetsDir: "./",
     rollupOptions: {
       output: {
         manualChunks: (id) => {
@@ -17,5 +21,13 @@ export default defineConfig({
         },
       },
     },
+  },
+  resolve: {
+    alias: [
+      {
+        find: "@",
+        replacement: path.resolve("./src"),
+      },
+    ],
   },
 });

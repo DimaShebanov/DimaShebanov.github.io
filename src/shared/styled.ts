@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Container } from "@material-ui/core";
 
-import { spaceMixin } from "../styling/mixins";
+import { spacing } from "../styling/mixins";
 import nervousGoose from "../img/nervous_goose.png";
 
 export const ScrollContainer = styled(Container)`
@@ -9,13 +9,13 @@ export const ScrollContainer = styled(Container)`
   flex-direction: column;
   overflow-y: auto;
   flex-grow: 1;
-  padding-bottom: ${spaceMixin(2)};
-  padding-top: ${spaceMixin(2)};
+  padding-bottom: ${spacing(2)};
+  padding-top: ${spacing(2)};
 `;
 
 export const NervousGoose = styled.img.attrs({
   src: nervousGoose,
   alt: "nervous goose",
 })`
-  height: ${spaceMixin(6)};
+  height: ${spacing(6)};
 `;

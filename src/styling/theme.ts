@@ -1,18 +1,35 @@
-import { createTheme } from "@material-ui/core";
-import orange from "@material-ui/core/colors/orange";
-import yellow from "@material-ui/core/colors/yellow";
+import { createTheme } from "@material-ui/core/styles";
 
 const theme = createTheme({
-  palette: {
-    type: "dark",
-    primary: yellow,
-    secondary: orange,
-    background: {
-      default: "#202020",
+  typography: {
+    allVariants: {
+      fontFamily: "Rubik, sans-serif",
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 650,
+      md: 900,
+      lg: 1320,
+      xl: 1536,
+    },
+  },
+  palette: {
+    // type: "dark",
+    // primary: yellow,
+    // secondary: orange,
+    // background: {
+    //   default: "#202020",
+    // },
+  },
   overrides: {
-    MuiFormLabel: {},
+    MuiLink: {
+      root: {
+        textDecoration: "none",
+        color: "inherit",
+      },
+    },
   },
 });
 
