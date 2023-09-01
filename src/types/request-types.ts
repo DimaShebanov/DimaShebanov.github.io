@@ -24,6 +24,8 @@ export interface RequestItemImage {
   url: string;
   file?: File;
   name: string;
+  extension?: string;
+  mime?: string;
 }
 
 export interface RequestItem {

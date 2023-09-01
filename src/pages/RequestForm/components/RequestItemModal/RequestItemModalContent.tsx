@@ -13,6 +13,8 @@ import {
 } from "@material-ui/core";
 import { get, isEmpty } from "lodash";
 
+import filetypeinfo from "magic-bytes.js";
+
 import { RequestItemModalProps } from "./RequestItemModalContent.interfaces";
 
 import {
@@ -77,7 +79,10 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
               render={(field) => (
                 <ImageInput
                   value={field.value}
-                  onChange={(image) => field.onChange(image)}
+                  onChange={(image) => {
+                    console.log("image", image);
+                    field.onChange(image);
+                  }}
                   error={getError(field.name)}
                 />
               )}

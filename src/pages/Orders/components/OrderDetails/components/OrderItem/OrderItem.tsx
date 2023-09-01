@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import {
   CardHeader,
@@ -15,6 +15,7 @@ import { getTableData } from "../../../../utils/getTableData";
 
 import { OrderItemProps } from "./OrderItem.interfaces";
 import OrderColor from "./components/OrderColor";
+
 import {
   Description,
   StyledAvatar,
@@ -29,13 +30,27 @@ const OrderItem: React.FC<OrderItemProps> = (props) => {
   const { sizes, countsMap } = useMemo(() => getTableData(colors), [colors]);
   const hasComment = !isEmpty(comments);
 
+  useEffect(() => {
+    const aaaa = async () => {
+      console.log("sending");
+      const awdw = await fileTypeFromFile(
+        "https://firebasestorage.googleapis.com/v0/b/client-form-mama-gus.appspot.com/o/897c08a581028b80011b94a22d1f3b48?alt=media&token=05fe766c-4318-4aea-9f8d-74c526e0bb38"
+      );
+      console.log("awdw", awdw);
+    };
+
+    aaaa();
+  }, []);
+
+  // https://firebasestorage.googleapis.com/v0/b/client-form-mama-gus.appspot.com/o/897c08a581028b80011b94a22d1f3b48?alt=media&token=05fe766c-4318-4aea-9f8d-74c526e0bb38
+
   return (
     <StyledCard>
       <CardHeader
         avatar={
           <StyledAvatar
             variant="square"
-            src={item.image?.url}
+            src={`${item.image?.url}.jpg`}
             alt={item.name}
           />
         }

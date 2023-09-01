@@ -1,8 +1,6 @@
 import { MutationFunction } from "react-query";
 import firebase from "firebase";
 
-import { isEmpty } from "lodash";
-
 import { RequestItemImage, RequestObject } from "../../types/request-types";
 import { firestore, storageRef } from "../../firebase/localFirebase";
 import { REQUESTS_COLLECTION } from "../../firebase/constants";
@@ -12,12 +10,9 @@ export const uploadImageMutation: MutationFunction<
   RequestItemImage,
   RequestItemImage
 > = (image) => {
-  const extension = image.name.split(".").pop();
-  const metadata = !isEmpty(extension)
-    ? {
-        contentType: `image/${extension}`,
-      }
-    : undefined;
+  const metadata = {
+    contentType: image?.mime,
+  };
 
   return storageRef
     .child(image.name)

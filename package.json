@@ -23,6 +23,7 @@
     "firebase": "^8.2.3",
     "immer": "^9.0.18",
     "lodash": "^4.17.21",
+    "magic-bytes.js": "^1.0.15",
     "material-ui": "^0.20.2",
     "md5": "^2.3.0",
     "react": "^17.0.1",
