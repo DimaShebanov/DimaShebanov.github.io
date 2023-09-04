@@ -30,19 +30,7 @@ const OrderItem: React.FC<OrderItemProps> = (props) => {
   const { sizes, countsMap } = useMemo(() => getTableData(colors), [colors]);
   const hasComment = !isEmpty(comments);
 
-  useEffect(() => {
-    const aaaa = async () => {
-      console.log("sending");
-      const awdw = await fileTypeFromFile(
-        "https://firebasestorage.googleapis.com/v0/b/client-form-mama-gus.appspot.com/o/897c08a581028b80011b94a22d1f3b48?alt=media&token=05fe766c-4318-4aea-9f8d-74c526e0bb38"
-      );
-      console.log("awdw", awdw);
-    };
-
-    aaaa();
-  }, []);
-
-  // https://firebasestorage.googleapis.com/v0/b/client-form-mama-gus.appspot.com/o/897c08a581028b80011b94a22d1f3b48?alt=media&token=05fe766c-4318-4aea-9f8d-74c526e0bb38
+  console.log("item.image?.url", item.image?.url);
 
   return (
     <StyledCard>
@@ -50,7 +38,7 @@ const OrderItem: React.FC<OrderItemProps> = (props) => {
         avatar={
           <StyledAvatar
             variant="square"
-            src={`${item.image?.url}.jpg`}
+            src={item.image?.url}
             alt={item.name}
           />
         }

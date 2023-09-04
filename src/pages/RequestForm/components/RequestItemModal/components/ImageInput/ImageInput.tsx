@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useRef } from "react";
+import React, { ChangeEvent, useCallback, useContext, useRef } from "react";
 import md5 from "md5";
 
 import filetypeinfo from "magic-bytes.js";
@@ -10,9 +10,14 @@ import { first } from "lodash";
 import styled, { css } from "styled-components";
 import { Button } from "@material-ui/core";
 
+import SnackbarContext from "../../../../../../components/SnackbarProvider/SnackbarContext";
+
+import { SNACKBAR_TYPES } from "../../../../../../types/snack-types";
+
 import { ImageInputProps } from "./ImageInput.interfaces";
 
 const ImageInput: React.FC<ImageInputProps> = (props) => {
+  const { showSnack } = useContext(SnackbarContext);
   const { value, onChange, error } = props;
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -37,12 +42,21 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
       const { extension, mime } = first(
         await getImageInfo(file)
       ) as GuessedFile;
-      const url = URL.createObjectURL(file);
-      const name = `${md5(file?.name + file?.lastModified)}.${extension}`;
 
-      onChange({ file, name, url, mime, extension });
+      if (mime !== "image/heif") {
+        const url = URL.createObjectURL(file);
+        const name = `${md5(file?.name + file?.lastModified)}.${extension}`;
+
+        onChange({ file, name, url, mime, extension });
+      } else {
+        showSnack({
+          type: SNACKBAR_TYPES.error,
+          content:
+            "На жаль, цей формат не підтримується, будь ласка, спробуйте інший. Або зробіть скріншот і завантажте його :)",
+        });
+      }
     },
-    [onChange]
+    [getImageInfo, onChange, showSnack]
   );
 
   const handleOpen = useCallback(() => {
