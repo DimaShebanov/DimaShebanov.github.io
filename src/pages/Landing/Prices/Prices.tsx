@@ -7,6 +7,8 @@ import { ReactComponent as Goose } from "@/assets/landing/goose.svg";
 
 import { down } from "styled-breakpoints";
 
+import { Link } from "react-router-dom";
+
 import { PRICES_DESCRIPTION, SECTIONS } from "../constants";
 
 import CircleText from "./CircleText";
@@ -20,7 +22,7 @@ const Prices = () => (
       <Content>
         <LeftSide>
           {PRICES_DESCRIPTION}
-          <PricesButton href="/prices">
+          <PricesButton to="/prices">
             <h5>Переглянути ціни</h5>
           </PricesButton>
         </LeftSide>
@@ -81,7 +83,7 @@ const GooseWrapper = styled.div`
 
 const RightSide = styled.div``;
 
-const PricesButton = styled.a`
+const PricesButton = styled(Link)`
   padding: ${spacing(2)} ${spacing(4)};
   background-color: ${color("white")};
   transition: 300ms ease;

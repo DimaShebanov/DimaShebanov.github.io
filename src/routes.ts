@@ -12,7 +12,7 @@ const routes = {
   //   component: RequestForm,
   // },
   home: {
-    path: "/",
+    path: "/*",
     component: Landing,
   },
 } as const;

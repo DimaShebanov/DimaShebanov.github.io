@@ -2,30 +2,39 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { color, fontSize, spacing } from "@/styling/mixins";
+import { color, fontSize } from "@/styling/mixins";
+
+import { Route, Switch } from "react-router-dom";
 
 import NavBar from "./NavBar/NavBar";
 import Header from "./Header/Header";
 import OurExperience from "./OurExperience";
-import CooperationTerms from "./CooperationTerms";
+import CooperationTerms from "./CooperationTerms/CooperationTerms";
 import Prices from "./Prices/Prices";
 import HowToStart from "./HowToStart";
 import Equipment from "./Equipment";
 import Contacts from "./Contacts/Contacts";
 import Footer from "./Footer";
+import PricesPage from "./PricesPage/PricesPage";
+
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const Landing = () => (
   <Root>
-    <NavBar />
-    <Header />
-    <OurExperience />
-    <CooperationTerms />
-    <Prices />
-    <HowToStart />
-    <Equipment />
-    <Contacts />
-    <Footer />
+    <Switch>
+      <Route path="/prices" component={PricesPage} />
+      <Route path="/">
+        <NavBar />
+        <Header />
+        <OurExperience />
+        <CooperationTerms />
+        <Prices />
+        <HowToStart />
+        <Equipment />
+        <Contacts />
+        <Footer />
+      </Route>
+    </Switch>
   </Root>
 );
 
