@@ -63,7 +63,6 @@ const StyledTermsTable = styled(TermsTable)`
 `;
 
 const PricesValue = styled.div`
-  white-space: nowrap;
   display: flex;
   flex-direction: column;
 `;

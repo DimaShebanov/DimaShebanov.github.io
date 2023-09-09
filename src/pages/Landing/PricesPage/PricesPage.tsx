@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 
-import { down } from "styled-breakpoints";
+import { down, up } from "styled-breakpoints";
 
 import { PRICES_TABLE_COLUMNS, PRICES_TABLE_DATA } from "./constants";
 
@@ -30,9 +30,9 @@ const PricesPage = () => {
   return (
     <Section background="yellow">
       <Container>
-        <StyledSectionTitle>
+        <StyledSectionTitle accentColor="white">
           <StyledIconButton onClick={onBackClick}>
-            <FontAwesomeIcon icon={faArrowLeft} />
+            <FontAwesomeIcon icon={faArrowLeft} color={color("primaryBlack")} />
           </StyledIconButton>
           ШО <span>ПО ЧОМУ?</span>
         </StyledSectionTitle>
@@ -90,14 +90,23 @@ const StyledSectionTitle = styled(SectionTitle)`
   ${down("lg")} {
     text-align: center;
   }
+
+  ${down("sm")} {
+    && {
+      ${fontSize("md")};
+    }
+  }
 `;
 
 const StyledIconButton = styled(IconButton)`
-  margin-right: auto;
   position: absolute;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
+
+  ${up("md")} {
+    ${fontSize("lg")};
+  }
 `;
 
 const StyledTable = styled(Table)`

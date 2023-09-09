@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ColorName } from "@/styling/types";
 import { COLORS } from "@/styling/constants";
-import { fontSize, spacing } from "@/styling/mixins";
+import { spacing } from "@/styling/mixins";
 import { down } from "styled-breakpoints";
 
 const SectionTitle = styled.h1<{
@@ -16,7 +16,7 @@ const SectionTitle = styled.h1<{
   margin-bottom: ${(p) => !p.noMargin && spacing(8)};
   text-transform: uppercase;
 
-  span {
+  & > span {
     background-color: ${(p) =>
       COLORS[p.accentColor as ColorName] ?? "transparent"};
     color: ${(p) => COLORS[p.accentTextColor ?? "primaryBlack"]};
@@ -25,7 +25,7 @@ const SectionTitle = styled.h1<{
 
   ${down("lg")} {
     && {
-      ${fontSize("xl")};
+      font-size: ${spacing(6)};
     }
 
     margin-bottom: ${(p) => !p.noMargin && spacing(3)};

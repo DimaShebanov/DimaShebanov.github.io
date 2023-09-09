@@ -188,8 +188,8 @@ export const FOOTER_CONTACTS = [
     title: "завітайте до нас",
     values: [
       {
-        text: "Дніпро\nтополина 12а",
-        value: "https://goo.gl/maps/18uTKjHYHiJzjEhB6",
+        text: "Дніпро\nвулиця Тополина",
+        value: "https://goo.gl/maps/zw3iUKmKNoztvuwU7",
       },
     ],
   },
