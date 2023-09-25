@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Section, SectionTitle } from "@/components/landing";
 import styled from "styled-components";
 import { color, spacing } from "@/styling/mixins";
-import contactPersonSrc from "@/assets/landing/images/contact_person.png";
+import contactPersonSrc from "@/assets/landing/images/contact_person.jpeg";
 
 import { down } from "styled-breakpoints";
 

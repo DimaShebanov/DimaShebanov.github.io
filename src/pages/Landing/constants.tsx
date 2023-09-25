@@ -4,11 +4,16 @@ import tshirtSrc from "@/assets/landing/images/tshirt.png";
 import hoodieSrc from "@/assets/landing/images/hoodie.png";
 import shirtSrc from "@/assets/landing/images/shirt.png";
 import outerwearSrc from "@/assets/landing/images/outerwear.png";
-import slider1Src from "@/assets/landing/images/slider_1.png";
-import slider2Src from "@/assets/landing/images/slider_2.png";
-import slider3Src from "@/assets/landing/images/slider_3.png";
-import slider4Src from "@/assets/landing/images/slider_4.png";
-import slider5Src from "@/assets/landing/images/slider_5.png";
+import slider1Src from "@/assets/landing/images/slider/1.jpg";
+import slider2Src from "@/assets/landing/images/slider/2.jpg";
+import slider3Src from "@/assets/landing/images/slider/3.jpg";
+import slider4Src from "@/assets/landing/images/slider/4.jpg";
+import slider5Src from "@/assets/landing/images/slider/5.jpg";
+import slider6Src from "@/assets/landing/images/slider/6.jpg";
+import slider7Src from "@/assets/landing/images/slider/7.jpg";
+import slider8Src from "@/assets/landing/images/slider/8.jpg";
+import slider9Src from "@/assets/landing/images/slider/9.jpg";
+import slider10Src from "@/assets/landing/images/slider/10.jpg";
 import { ReactComponent as IconPhone } from "@/assets/landing/icon_phone.svg";
 import { ReactComponent as IconTelegram } from "@/assets/landing/icon_telegram.svg";
 import { ReactComponent as IconViber } from "@/assets/landing/icon_viber.svg";
@@ -141,6 +146,11 @@ export const SLIDER_IMAGES = [
   slider3Src,
   slider4Src,
   slider5Src,
+  slider6Src,
+  slider7Src,
+  slider8Src,
+  slider9Src,
+  slider10Src,
 ];
 
 export const CONTACTS_DESCRIPTION =
@@ -201,8 +211,8 @@ export const FOOTER_CONTACTS = [
         value: "https://www.instagram.com/mama_i_gus_factory/",
       },
       {
-        text: "Tiktok (?)",
-        value: "",
+        text: "facebook",
+        value: "https://www.facebook.com/mama.i.gus.factory/",
       },
     ],
   },

@@ -18,8 +18,8 @@ const Equipment = () => (
       </StyledSectionTitle>
       <Content>
         <StyledCarousel
-          // autoPlay
-          // stopOnHover
+          autoPlay
+          stopOnHover
           infiniteLoop
           renderIndicator={(clickHandler, isSelected) => (
             <CarouselIndicator onClick={clickHandler} isSelected={isSelected} />

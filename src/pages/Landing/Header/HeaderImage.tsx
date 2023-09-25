@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { color, fontSize, spacing } from "@/styling/mixins";
-import headerImageSrc from "@/assets/landing/header_image.png";
+import headerImageSrc from "@/assets/landing/header_image.jpg";
 import { ReactComponent as HeaderCircle } from "@/assets/landing/header_circle.svg";
 import { ReactComponent as Zigzag } from "@/assets/landing/zig-zag.svg";
 import { ReactComponent as HeaderCross } from "@/assets/landing/header_cross.svg";
@@ -53,6 +53,10 @@ const Image = styled.div`
   background-repeat: no-repeat;
   min-height: 600px;
   width: 100%;
+
+  ${down("xl")} {
+    min-height: 500px;
+  }
 `;
 
 const BlackRect = styled.div`
