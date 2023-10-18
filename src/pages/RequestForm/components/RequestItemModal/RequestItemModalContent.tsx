@@ -13,11 +13,10 @@ import {
 } from "@material-ui/core";
 import { get, isEmpty } from "lodash";
 
-import filetypeinfo from "magic-bytes.js";
-
 import { RequestItemModalProps } from "./RequestItemModalContent.interfaces";
 
 import {
+  ButtonsContainer,
   ColorsWrap,
   Footer,
   Header,
@@ -51,9 +50,14 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
     formState: { isDirty, errors },
   } = formContext;
   const itemValidationError = get(errors, "requestItem.message");
+
   const imageError =
     get(errors, "image.url.message") ??
     (imageUploadError && IMAGE_UPLOAD_ERROR);
+
+  const isSubmitDisabled =
+    !isDirty || !isEmpty(errors) || imageLoading || imageUploadError;
+
   const footerError = itemValidationError ?? imageError;
   const hasFooterError = !imageLoading && !isEmpty(footerError);
 
@@ -79,10 +83,7 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
               render={(field) => (
                 <ImageInput
                   value={field.value}
-                  onChange={(image) => {
-                    console.log("image", image);
-                    field.onChange(image);
-                  }}
+                  onChange={(image) => field.onChange(image)}
                   error={getError(field.name)}
                 />
               )}
@@ -143,20 +144,24 @@ const RequestItemModal: React.FC<RequestItemModalProps> = (props) => {
       </DialogContent>
       {imageLoading && <LinearProgress />}
       <Footer>
-        <Button disabled={imageLoading} onClick={onClose}>
-          Відміна
-        </Button>
-        <FormHelperText error={hasFooterError}>
-          {getHelperText()}
-        </FormHelperText>
-        <SubmitButton
-          onClick={onSubmit}
-          disabled={!isDirty || !isEmpty(errors) || imageLoading}
-          color="primary"
-          variant="contained"
-        >
-          Зберегти
-        </SubmitButton>
+        {hasFooterError && (
+          <FormHelperText error={hasFooterError}>
+            {getHelperText()}
+          </FormHelperText>
+        )}
+        <ButtonsContainer>
+          <Button disabled={imageLoading} onClick={onClose}>
+            Відміна
+          </Button>
+          <SubmitButton
+            onClick={onSubmit}
+            disabled={isSubmitDisabled}
+            color="primary"
+            variant="contained"
+          >
+            Зберегти
+          </SubmitButton>
+        </ButtonsContainer>
       </Footer>
     </Root>
   );

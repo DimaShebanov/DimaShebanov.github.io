@@ -70,19 +70,22 @@ const useRequestItemModalContent = (props: RequestItemModalProps) => {
     [errors]
   );
 
-  const handleSave = useCallback(async (requestItem: RequestItem) => {
-    if (editItemRef.current?.image) {
-      await deleteImage(editItemRef.current.image);
-    }
+  const handleSave = useCallback(
+    async (requestItem: RequestItem) => {
+      if (editItemRef.current?.image) {
+        await deleteImage(editItemRef.current.image);
+      }
 
-    const image = await uploadImage(requestItem.image);
-    const preparedRequestItem = {
-      ...requestItem,
-      image,
-    };
+      const image = await uploadImage(requestItem.image);
+      const preparedRequestItem = {
+        ...requestItem,
+        image,
+      };
 
-    onSave(preparedRequestItem);
-  }, []);
+      onSave(preparedRequestItem);
+    },
+    [deleteImage, onSave, uploadImage]
+  );
 
   const onSubmit = useMemo(() => handleSubmit(handleSave), [
     handleSubmit,

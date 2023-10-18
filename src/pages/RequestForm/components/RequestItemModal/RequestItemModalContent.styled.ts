@@ -42,9 +42,17 @@ export const Column = styled.div`
 export const Footer = styled(DialogActions)`
   box-shadow: 0 1px 6px 0 rgb(255 255 255 / 20%);
   font-weight: bold;
-  justify-content: space-between;
-  flex-wrap: wrap;
   border-top: 1px solid ${({ theme }) => theme.palette.divider};
+  
+  gap: ${spaceMixin(1)};
+  flex-direction: column;
+`;
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
 `;
 
 export const SubmitButton = styled(Button)`
