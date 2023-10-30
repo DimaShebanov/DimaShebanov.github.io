@@ -12,9 +12,11 @@ code {
     monospace;
 }
 
+html, body, #root {
+  height: 100%;
+}
+
 #root {
-  max-height: 100vh;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
