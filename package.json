@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "yarn build && firebase deploy --only hosting",
@@ -19,6 +19,7 @@
     "@material-ui/styles": "^4.11.4",
     "@types/md5": "^2.3.2",
     "dateformat": "^4.5.1",
+    "dropbox": "^10.34.0",
     "faker": "^5.2.0",
     "firebase": "^8.2.3",
     "immer": "^9.0.18",

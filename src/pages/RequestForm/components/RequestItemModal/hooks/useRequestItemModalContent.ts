@@ -15,6 +15,7 @@ import requestItemSchema from "../validation";
 import {
   RequestItem,
   RequestItemColor,
+  RequestItemImage,
 } from "../../../../../types/request-types";
 import {
   deleteImageMutation,
@@ -72,15 +73,18 @@ const useRequestItemModalContent = (props: RequestItemModalProps) => {
 
   const handleSave = useCallback(
     async (requestItem: RequestItem) => {
-      if (editItemRef.current?.image) {
-        await deleteImage(editItemRef.current.image);
+      if (
+        !isNil(editItemRef.current?.image) &&
+        requestItem?.image.name !== editItemRef.current?.image.name
+      ) {
+        await deleteImage(editItemRef.current?.image as RequestItemImage);
       }
 
-      const image = await uploadImage(requestItem.image);
-      const preparedRequestItem = {
-        ...requestItem,
-        image,
-      };
+      const preparedRequestItem = requestItem;
+
+      if (!requestItem.image.uploaded) {
+        preparedRequestItem.image = await uploadImage(requestItem.image);
+      }
 
       onSave(preparedRequestItem);
     },

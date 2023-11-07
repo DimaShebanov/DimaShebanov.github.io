@@ -45,7 +45,7 @@ const ImageInput: React.FC<ImageInputProps> = (props) => {
 
       if (mime !== "image/heif") {
         const url = URL.createObjectURL(file);
-        const name = `${md5(file?.name + file?.lastModified)}.${extension}`;
+        const name = `${md5(file?.name + Date.now())}.${extension}`;
 
         onChange({ file, name, url, mime, extension });
       } else {

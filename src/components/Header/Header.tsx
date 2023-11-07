@@ -98,8 +98,8 @@ const Header: React.FC = () => {
             open={menuOpen}
             onClose={closeMenu}
           >
-            <MenuItem onClick={logout}>Вийти</MenuItem>
             <MenuItem onClick={goToOrders}>Список замовленнь</MenuItem>
+            <MenuItem onClick={logout}>Вийти</MenuItem>
           </Menu>
         ) : null}
       </AppBar>

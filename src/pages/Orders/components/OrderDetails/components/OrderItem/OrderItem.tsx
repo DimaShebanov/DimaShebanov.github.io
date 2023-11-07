@@ -30,8 +30,6 @@ const OrderItem: React.FC<OrderItemProps> = (props) => {
   const { sizes, countsMap } = useMemo(() => getTableData(colors), [colors]);
   const hasComment = !isEmpty(comments);
 
-  console.log("item.image?.url", item.image?.url);
-
   return (
     <StyledCard>
       <CardHeader

@@ -58,7 +58,7 @@ const RequestForm = () => {
   const [request, _setRequest] = useState<RequestObject>(
     getLocalStorageRequest()
   );
-
+  
   const { brandName, requestItems } = request;
 
   const setRequest: Dispatch<SetStateAction<RequestObject>> = useCallback(

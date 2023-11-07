@@ -24,6 +24,7 @@ export interface RequestItemImage {
   url: string;
   file?: File;
   name: string;
+  uploaded?: boolean;
   extension?: string;
   mime?: string;
 }
