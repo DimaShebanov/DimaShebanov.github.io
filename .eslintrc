@@ -146,6 +146,7 @@
         "no-param-reassign": 0,
         "no-shadow": 1, // TODO promote to error when eliminated
         "no-prototype-builtins": 0,
+        "no-restricted-globals": 0,
         "no-restricted-syntax": [
             "error",
             "ForInStatement",

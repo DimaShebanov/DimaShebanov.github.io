@@ -1,10 +1,16 @@
-import { Dropbox } from "dropbox";
+import { Dropbox, DropboxAuth } from "dropbox";
 
 import { first } from "lodash";
 
 import { RequestItemImage } from "../types/request-types";
 
-const dbx = new Dropbox({ accessToken: process.env.DROPBOX_AUTH });
+const dbxAuth = new DropboxAuth({
+  clientId: process.env.DROPBOX_ID,
+  refreshToken: process.env.DROPBOX_REFRESH_TOKEN,
+  clientSecret: process.env.DROPBOX_SECRET,
+});
+
+const dbx = new Dropbox({ auth: dbxAuth });
 
 const formatImage = (
   { name }: RequestItemImage,
@@ -38,4 +44,5 @@ export const uploadFile = async (
   }
 };
 
-export const deleteFile = (fileName: string) => dbx.filesDeleteV2({ path: `/${fileName}` });
+export const deleteFile = (fileName: string) =>
+  dbx.filesDeleteV2({ path: `/${fileName}` });
